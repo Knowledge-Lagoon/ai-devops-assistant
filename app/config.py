@@ -1,15 +1,23 @@
-from google import genai
-from app.config import GEMINI_API_KEY
-from app.ai.base import AIProvider
+import os
+from pathlib import Path
 
-class GeminiProvider(AIProvider):
 
-    def __init__(self):
-        self.client = genai.Client(api_key=GEMINI_API_KEY)
+BASE_DIR = Path(__file__).resolve().parent.parent
+ENV_FILE = BASE_DIR / ".env"
 
-    def ask(self, prompt: str) -> str:
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-        return response.text
+
+def load_env() -> None:
+    if not ENV_FILE.exists():
+        return
+
+    for line in ENV_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip())
+
+
+load_env()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
