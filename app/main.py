@@ -1,8 +1,8 @@
-from app.ai.gemini_provider import GeminiProvider
+from app.ai.ollama_provider import GeminiProvider
 
 
 def main() -> None:
-    ai = GeminiProvider()
+    ai = OllamaProvider()
     question = input("Ask me anything about DevOps: ")
     answer = ai.ask(question)
 
