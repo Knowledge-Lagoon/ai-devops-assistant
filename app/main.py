@@ -1,4 +1,4 @@
-from app.ai.ollama_provider import GeminiProvider
+from app.ai.ollama_provider import OllamaProvider
 
 
 def main() -> None:
