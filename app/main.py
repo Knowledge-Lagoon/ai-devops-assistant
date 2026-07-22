@@ -1,16 +1,10 @@
-from fastapi import FastAPI
-
 from app.ai.gemini_provider import GeminiProvider
 
-app = FastAPI(title="AI DevOps Assistant")
-provider = GeminiProvider()
+ai = GeminiProvider()
 
+question = input("Ask me anything about DevOps: ")
 
-@app.get("/")
-def read_root() -> dict[str, str]:
-    return {"message": "AI DevOps Assistant is running"}
+answer = ai.ask(question)
 
-
-@app.post("/generate")
-def generate(prompt: str) -> dict[str, str]:
-    return {"response": provider.generate(prompt)}
+print("\nAnswer:\n")
+print(answer)
