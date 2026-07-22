@@ -15,8 +15,12 @@ class GeminiProvider(AIProvider):
         self.client = genai.Client(api_key=resolved_api_key)
 
     def ask(self, prompt: str) -> str:
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-        )
+        try:
+            response = self.client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=prompt,
+            )
+        except Exception as exc:
+            raise RuntimeError(f"Gemini request failed: {exc}") from exc
+
         return response.text
