@@ -21,3 +21,5 @@ def load_env() -> None:
 
 load_env()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "phi3:mini")
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://172.31.15.13:11434")
