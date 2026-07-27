@@ -1,4 +1,4 @@
-# Company-Specific DevOps Knowledge Base
+# Project-Specific DevOps Knowledge Base
 
 Place approved internal documents here, such as:
 
