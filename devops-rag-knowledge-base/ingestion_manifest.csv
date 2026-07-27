@@ -1,0 +1,11 @@
+file_name,technology,topic,doc_type,source_type,source_url,confidentiality
+kubernetes/kubernetes_overview.md,kubernetes,overview,concept,curated-starter,https://kubernetes.io/docs/home/,internal-poc
+kubernetes/kubectl_troubleshooting.md,kubernetes,troubleshooting,runbook,curated-starter,https://kubernetes.io/docs/home/,internal-poc
+kubernetes/aks_notes.md,kubernetes,aks,platform-notes,curated-starter,https://kubernetes.io/docs/home/,internal-poc
+terraform/terraform_overview.md,terraform,overview,concept,curated-starter,https://developer.hashicorp.com/terraform/docs,internal-poc
+terraform/terraform_workflows.md,terraform,workflows,runbook,curated-starter,https://developer.hashicorp.com/terraform/docs,internal-poc
+terraform/terraform_best_practices.md,terraform,best-practices,guidance,curated-starter,https://developer.hashicorp.com/terraform/docs,internal-poc
+jenkins/jenkins_overview.md,jenkins,overview,concept,curated-starter,https://www.jenkins.io/doc/,internal-poc
+jenkins/jenkins_pipeline_basics.md,jenkins,pipeline,example,curated-starter,https://www.jenkins.io/doc/,internal-poc
+jenkins/jenkins_troubleshooting.md,jenkins,troubleshooting,runbook,curated-starter,https://www.jenkins.io/doc/,internal-poc
+company-specific/README.md,company-specific,instructions,guidance,template,,internal-poc

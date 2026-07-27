@@ -1,0 +1,22 @@
+{
+  "chunking_strategy": "markdown_heading_aware",
+  "recommended_chunk_size_tokens": 800,
+  "recommended_chunk_overlap_tokens": 120,
+  "metadata_fields": [
+    "technology",
+    "topic",
+    "doc_type",
+    "source_type",
+    "source_url",
+    "file_name",
+    "version",
+    "owner",
+    "confidentiality"
+  ],
+  "retrieval_guidance": {
+    "top_k": 5,
+    "rerank": true,
+    "answer_style": "cite source snippets and state when information is not found",
+    "do_not_answer_without_context": true
+  }
+}
