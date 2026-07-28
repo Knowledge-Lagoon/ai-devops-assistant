@@ -3,7 +3,8 @@ from pathlib import Path
 from langchain_community.document_loaders import (
     TextLoader,
     PyPDFLoader,
-    Docx2txtLoader
+    Docx2txtLoader,
+    UnstructuredMarkdownLoader
 )
 
 
@@ -19,6 +20,11 @@ def load_documents(folder_path):
             loader = TextLoader(
                 str(file),
                 encoding="utf-8"
+            )
+
+        elif file.suffix == ".md":
+            loader = UnstructuredMarkdownLoader(
+                str(file)
             )
 
         elif file.suffix == ".pdf":
