@@ -1,10 +1,14 @@
-from sentence_transformers import SentenceTransformer
+from langchain_ollama import OllamaEmbeddings
 
-class EmbeddingGenerator:
-    def __init__(self):
-        self.model = SentenceTransformer(
-            "sentence-transformers/all-MiniLM-L6-v2"
-        )
+from app.config import (
+    OLLAMA_HOST,
+    OLLAMA_EMBEDDING_MODEL,
+)
 
-    def embed(self, texts):
-        return self.model.encode(texts).tolist()
+
+def get_embeddings():
+
+    return OllamaEmbeddings(
+        model=OLLAMA_EMBEDDING_MODEL,
+        base_url=OLLAMA_HOST,
+    )

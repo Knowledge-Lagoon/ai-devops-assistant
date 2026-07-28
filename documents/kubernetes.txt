@@ -1,0 +1,22 @@
+Kubernetes Troubleshooting Guide
+
+CrashLoopBackOff occurs when a Kubernetes container repeatedly starts and fails.
+
+Common troubleshooting steps:
+
+1. Check pod status:
+kubectl get pods
+
+2. Check container logs:
+kubectl logs <pod-name>
+
+3. Describe pod events:
+kubectl describe pod <pod-name>
+
+4. Check resource limits:
+Review CPU and memory requests and limits.
+
+5. Check configuration:
+Verify ConfigMaps, Secrets and environment variables.
+
+6. Check application startup errors.

@@ -1,40 +1,14 @@
-import chromadb
-from chromadb.config import Settings
+from langchain_community.vectorstores import Chroma
+
+from app.config import OLLAMA_HOST
 
 
-class VectorStore:
-    def __init__(
-        self,
-        persist_directory="vector_db",
-        collection_name="devops_docs",
-    ):
-        self.client = chromadb.PersistentClient(path=persist_directory)
+def create_vector_store(documents, embeddings):
 
-        self.collection = self.client.get_or_create_collection(
-            name=collection_name
-        )
+    vector_store = Chroma.from_documents(
+        documents=documents,
+        embedding=embeddings,
+        persist_directory="vector_db"
+    )
 
-    def add_documents(self, chunks, embeddings, metadata=None):
-        """
-        Store document chunks and embeddings in ChromaDB.
-
-        Parameters:
-            chunks (list[str])
-            embeddings (list[list[float]])
-            metadata (list[dict]) optional
-        """
-
-        ids = [f"doc_{i}" for i in range(len(chunks))]
-
-        if metadata is None:
-            metadata = [{} for _ in chunks]
-
-        self.collection.add(
-            ids=ids,
-            documents=chunks,
-            embeddings=embeddings,
-            metadatas=metadata,
-        )
-
-    def count(self):
-        return self.collection.count()
+    return vector_store
