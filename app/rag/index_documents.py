@@ -7,8 +7,8 @@ from app.rag.vector_store import create_vector_store
 def main():
 
     documents = load_documents(
-        "documents/kubernetes.txt"
-    )
+       "documents"
+)
 
     chunks = split_documents(
         documents
