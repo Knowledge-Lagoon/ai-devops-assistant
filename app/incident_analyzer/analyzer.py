@@ -41,10 +41,18 @@ Analyze the following incident logs.
 Determine:
 
 1. Incident Type
-2. Severity (Low, Medium, High, Critical)
+2. Severity
 3. Likely Root Cause
 4. Business Impact
 5. Recommended Actions
+
+Rules:
+
+- Base conclusions only on the provided logs and retrieved context.
+- If information is not available, say "Unknown".
+- Do not invent shell commands.
+- Do not generate kubectl, terraform, Jenkins, SQL, or Linux commands unless they are explicitly supported by the retrieved context.
+- Keep recommendations practical and concise.
 
 Log Events:
 
