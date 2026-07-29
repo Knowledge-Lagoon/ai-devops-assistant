@@ -83,20 +83,12 @@ Recommended Actions:
 
 if __name__ == "__main__":
 
-    from app.incident_analyzer.parser import extract_events
+    sample_events = [
+        "ERROR JDBC Connection Timeout",
+        "ERROR Connection pool exhausted",
+        "ERROR Unable to connect to database",
+    ]
 
-    with open("logs/kubernetes_crashloop.log", "r") as f:
-        log_text = f.read()
-
-    events = extract_events(log_text)
-
-    print("\nDetected Events:\n")
-
-    for event in events:
-        print(f"- {event}")
-
-    print("\nGenerating Incident Report...\n")
-
-    report = analyze(events)
-
-    print(report)
+    print(
+        analyze(sample_events)
+    )
