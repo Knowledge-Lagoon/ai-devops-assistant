@@ -1,0 +1,7 @@
+2026-07-30 10:01:01 INFO Application Started
+
+2026-07-30 10:01:15 ERROR JDBC Connection Timeout
+
+2026-07-30 10:01:17 ERROR Connection pool exhausted
+
+2026-07-30 10:01:18 ERROR Unable to connect to database

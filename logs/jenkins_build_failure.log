@@ -1,0 +1,36 @@
+Started by user DevOpsAdmin
+
+[Pipeline] Start of Pipeline
+
+[Pipeline] stage
+[Pipeline] { (Checkout)
+
+Checking out Git repository
+
+Fetching origin
+
+ERROR: Failed to fetch from repository
+
+hudson.plugins.git.GitException: Command "git fetch --tags --force" returned status code 128
+
+Caused by:
+fatal: Authentication failed for https://github.com/company/project.git
+
+[Pipeline] }
+
+[Pipeline] stage
+[Pipeline] { (Build)
+
+Skipping stage "Build" due to earlier failure(s)
+
+[Pipeline] }
+
+[Pipeline] stage
+[Pipeline] { (Deploy)
+
+Skipping stage "Deploy" due to earlier failure(s)
+
+[Pipeline] }
+
+Finished: FAILURE
+`

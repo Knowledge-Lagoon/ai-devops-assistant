@@ -1,0 +1,29 @@
+2026-07-30T10:01:15Z INFO Pod customer-api-7c9b8c95f6-x2rkd scheduled successfully
+
+2026-07-30T10:01:20Z INFO Container customer-api started
+
+2026-07-30T10:01:22Z ERROR Application failed to start
+
+java.lang.RuntimeException: Database connection failed
+
+Caused by:
+
+java.net.ConnectException: Connection refused
+
+2026-07-30T10:01:23Z ERROR Unable to connect to database host postgres-service
+
+2026-07-30T10:01:24Z INFO Container terminated with exit code 1
+
+2026-07-30T10:01:25Z WARNING Back-off restarting failed container
+
+2026-07-30T10:01:26Z WARNING CrashLoopBackOff
+
+2026-07-30T10:01:50Z INFO Restarting container
+
+2026-07-30T10:01:52Z ERROR Application failed to start
+
+java.lang.RuntimeException: Database connection failed
+
+2026-07-30T10:01:53Z ERROR Connection refused
+
+2026-07-30T10:01:54Z WARNING CrashLoopBackOff

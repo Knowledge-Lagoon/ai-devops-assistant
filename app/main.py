@@ -1,14 +1,25 @@
 from app.ai.ollama_provider import OllamaProvider
 
+def main():
 
-def main() -> None:
     ai = OllamaProvider()
-    question = input("Ask me anything about DevOps: ")
-    answer = ai.ask(question)
 
-    print("\nAnswer:\n")
-    print(answer)
+    print("\n1. DevOps Chat")
+    print("2. Analyze Incident Log")
 
+    choice = input("\nSelect option: ")
 
-if __name__ == "__main__":
-    main()
+    if choice == "1":
+
+        question = input("\nAsk me anything about DevOps: ")
+
+        answer = ai.ask(question)
+
+        print("\nAnswer:\n")
+        print(answer)
+
+    elif choice == "2":
+
+        log_file = input("\nEnter log file path: ")
+
+        # Incident Analyzer code here

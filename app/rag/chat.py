@@ -28,11 +28,11 @@ def get_retriever():
     )
 
 
-def ask_question(question):
+def ask_with_rag(request: str) -> str:
 
     retriever = get_retriever()
 
-    documents = retriever.invoke(question)
+    documents = retriever.invoke(request)
 
     context = "\n\n".join(
         doc.page_content
@@ -42,13 +42,13 @@ def ask_question(question):
     prompt = f"""
 You are an experienced DevOps Engineer.
 
-Answer the question using only the provided context.
+Use ONLY the provided context to answer the request.
 
 Context:
 {context}
 
-Question:
-{question}
+Request:
+{request}
 
 Answer:
 """
@@ -61,6 +61,13 @@ Answer:
     response = llm.invoke(prompt)
 
     return response
+
+
+def ask_question(question: str) -> str:
+    """
+    Backward compatibility with Project 2.
+    """
+    return ask_with_rag(question)
 
 
 if __name__ == "__main__":
