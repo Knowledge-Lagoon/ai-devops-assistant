@@ -36,23 +36,22 @@ def analyze(log_events: list[str]) -> str:
     prompt = f"""
 You are a Senior DevOps Engineer and Site Reliability Engineer.
 
-Analyze the following incident logs.
+Analyze the logs strictly based on available evidence.
+
+Rules:
+- Use only information present in the logs and retrieved context.
+- Do not speculate.
+- If information is unknown, state "Unknown".
+- Do not mention business or financial impacts unless clearly supported by the logs.
+- Keep recommendations technical and actionable.
 
 Determine:
 
 1. Incident Type
 2. Severity
 3. Likely Root Cause
-4. Business Impact
+4. Evidence
 5. Recommended Actions
-
-Rules:
-
-- Base conclusions only on the provided logs and retrieved context.
-- If information is not available, say "Unknown".
-- Do not invent shell commands.
-- Do not generate kubectl, terraform, Jenkins, SQL, or Linux commands unless they are explicitly supported by the retrieved context.
-- Keep recommendations practical and concise.
 
 Log Events:
 
