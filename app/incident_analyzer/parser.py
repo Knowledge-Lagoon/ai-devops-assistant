@@ -19,11 +19,10 @@ ERROR_KEYWORDS = [
 
 
 def extract_events(log_text: str) -> list[str]:
-    """
-    Extract significant log entries.
-    """
 
-    events =  line in log_text.splitlines():
+    events = []
+
+    for line in log_text.splitlines():
 
         line = line.strip()
 
@@ -40,9 +39,6 @@ def extract_events(log_text: str) -> list[str]:
 
 
 def summarize_log(log_text: str) -> dict:
-    """
-    Create a basic summary of a log file.
-    """
 
     events = extract_events(log_text)
 
