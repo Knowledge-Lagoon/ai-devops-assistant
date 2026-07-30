@@ -8,3 +8,4 @@ pypdf
 docx2txt
 unstructured
 markdown
+ollama
