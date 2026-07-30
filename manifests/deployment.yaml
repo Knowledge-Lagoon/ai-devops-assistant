@@ -7,21 +7,21 @@ metadata:
 spec:
   replicas: 1
 
-  selector:
-    matchLabels:
-      app: customer-api
-
   template:
-    metadata:
-      labels:
-        app: customer-api
 
     spec:
+
       containers:
 
       - name: customer-api
 
         image: customer-api:latest
 
+        resources: {}
+
+        securityContext:
+          privileged: true
+
         ports:
         - containerPort: 8080
+``
