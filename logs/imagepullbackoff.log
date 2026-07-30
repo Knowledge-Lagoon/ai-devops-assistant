@@ -1,55 +1,9 @@
-Name:             broken-app-59f88f4cb-fjxmp
-Namespace:        default
-Priority:         0
-Service Account:  default
-Node:             ip-192-168-5-139.ec2.internal/192.168.5.139
-Start Time:       Thu, 30 Jul 2026 14:26:36 +0000
-Labels:           app=broken-app
-                  pod-template-hash=59f88f4cb
-Annotations:      <none>
-Status:           Pending
-IP:               192.168.26.175
-IPs:
-  IP:           192.168.26.175
-Controlled By:  ReplicaSet/broken-app-59f88f4cb
-Containers:
-  broken-app:
-    Container ID:   
-    Image:          nginx:this-tag-does-not-exist
-    Image ID:       
-    Port:           80/TCP
-    Host Port:      0/TCP
-    State:          Waiting
-      Reason:       ImagePullBackOff
-    Ready:          False
-    Restart Count:  0
-    Environment:    <none>
-    Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-l9hk5 (ro)
-Conditions:
-  Type                        Status
-  PodReadyToStartContainers   True 
-  Initialized                 True 
-  Ready                       False 
-  ContainersReady             False 
-  PodScheduled                True 
-Volumes:
-  kube-api-access-l9hk5:
-    Type:                    Projected (a volume that contains injected data from multiple sources)
-    TokenExpirationSeconds:  3607
-    ConfigMapName:           kube-root-ca.crt
-    Optional:                false
-    DownwardAPI:             true
-QoS Class:                   BestEffort
-Node-Selectors:              <none>
-Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
-                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
-Events:
-  Type     Reason     Age                   From               Message
-  ----     ------     ----                  ----               -------
-  Normal   Scheduled  4m37s                 default-scheduler  Successfully assigned default/broken-app-59f88f4cb-fjxmp to ip-192-168-5-139.ec2.internal
-  Normal   Pulling    114s (x5 over 4m36s)  kubelet            spec.containers{broken-app}: Pulling image "nginx:this-tag-does-not-exist"
-  Warning  Failed     114s (x5 over 4m36s)  kubelet            spec.containers{broken-app}: Failed to pull image "nginx:this-tag-does-not-exist": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/nginx:this-tag-does-not-exist": failed to resolve reference "docker.io/library/nginx:this-tag-does-not-exist": docker.io/library/nginx:this-tag-does-not-exist: not found
-  Warning  Failed     114s (x5 over 4m36s)  kubelet            spec.containers{broken-app}: Error: ErrImagePull
-  Warning  Failed     37s (x15 over 4m36s)  kubelet            spec.containers{broken-app}: Error: ImagePullBackOff
-  Normal   BackOff    11s (x17 over 4m36s)  kubelet            spec.containers{broken-app}: Back-off pulling image "nginx:this-tag-does-not-exist"
+Reason: ImagePullBackOff
+
+Failed to pull image "nginx:this-tag-does-not-exist"
+
+Error: ErrImagePull
+
+docker.io/library/nginx:this-tag-does-not-exist: not found
+
+Back-off pulling image "nginx:this-tag-does-not-exist"
