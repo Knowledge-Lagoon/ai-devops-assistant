@@ -31,30 +31,5 @@ if __name__ == "__main__":
     pod_name = input("Enter pod name: ").strip()
     namespace = input("Enter namespace [chaos-lab]: ").strip() or "chaos-lab"
 
-    print("Would you like to provide pod describe/log output manually? (y/N)")
-    choice = input().strip().lower()
-
-    if choice in {"y", "yes"}:
-        print("Paste pod describe output (end with EOF on a new line):")
-        pod_details_lines = []
-        while True:
-            line = input()
-            if line == "EOF":
-                break
-            pod_details_lines.append(line)
-        pod_details = "\n".join(pod_details_lines)
-
-        print("Paste pod logs output (end with EOF on a new line):")
-        pod_logs_lines = []
-        while True:
-            line = input()
-            if line == "EOF":
-                break
-            pod_logs_lines.append(line)
-        pod_logs = "\n".join(pod_logs_lines)
-
-        report = analyze_pod(pod_name, pod_details=pod_details, pod_logs=pod_logs, namespace=namespace)
-    else:
-        report = analyze_pod(pod_name, namespace=namespace)
-
+    report = analyze_pod(pod_name, namespace=namespace)
     print(report)
