@@ -33,6 +33,7 @@ class ClusterAnalyzerTests(unittest.TestCase):
         self.assertIn("pod not found", result)
 
     @patch("app.kubernetes_assistant.cluster_analyzer.subprocess.run")
+    @patch("app.kubernetes_assistant.cluster_analyzer.KUBECTL_COMMAND", "ssh jumpbox kubectl")
     def test_get_pod_details_uses_kubectl_override_from_environment(self, mock_run):
         mock_run.return_value = SimpleNamespace(
             returncode=0,
@@ -40,17 +41,26 @@ class ClusterAnalyzerTests(unittest.TestCase):
             stderr="",
         )
 
-        with patch.dict(
-            "os.environ",
-            {"KUBECTL_COMMAND": "ssh jumpbox kubectl"},
-            clear=False,
-        ):
-            result = get_pod_details("crashloop-demo")
+        result = get_pod_details("crashloop-demo")
 
         self.assertEqual(result, "pod details")
         self.assertEqual(mock_run.call_args[0][0][0], "ssh")
         self.assertEqual(mock_run.call_args[0][0][1], "jumpbox")
         self.assertEqual(mock_run.call_args[0][0][2], "kubectl")
+
+    @patch("app.kubernetes_assistant.cluster_analyzer.subprocess.run")
+    @patch("app.kubernetes_assistant.cluster_analyzer.K8S_NAMESPACE", "custom-ns")
+    def test_get_pod_details_uses_namespace_from_environment(self, mock_run):
+        mock_run.return_value = SimpleNamespace(
+            returncode=0,
+            stdout="pod details",
+            stderr="",
+        )
+
+        get_pod_details("crashloop-demo")
+
+        self.assertEqual(mock_run.call_args[0][0][-2], "-n")
+        self.assertEqual(mock_run.call_args[0][0][-1], "custom-ns")
 
 
 if __name__ == "__main__":

@@ -7,11 +7,11 @@ from app.kubernetes_assistant.cluster_analyzer import (
 )
 
 
-def analyze_pod(pod_name, pod_details=None, pod_logs=None):
+def analyze_pod(pod_name, pod_details=None, pod_logs=None, namespace="chaos-lab"):
     if pod_details is None:
-        pod_details = get_pod_details(pod_name)
+        pod_details = get_pod_details(pod_name, namespace=namespace)
     if pod_logs is None:
-        pod_logs = get_pod_logs(pod_name)
+        pod_logs = get_pod_logs(pod_name, namespace=namespace)
 
     combined = f"""
 === POD DETAILS ===
@@ -29,6 +29,7 @@ def analyze_pod(pod_name, pod_details=None, pod_logs=None):
 
 if __name__ == "__main__":
     pod_name = input("Enter pod name: ").strip()
+    namespace = input("Enter namespace [chaos-lab]: ").strip() or "chaos-lab"
 
     print("Would you like to provide pod describe/log output manually? (y/N)")
     choice = input().strip().lower()
@@ -52,8 +53,8 @@ if __name__ == "__main__":
             pod_logs_lines.append(line)
         pod_logs = "\n".join(pod_logs_lines)
 
-        report = analyze_pod(pod_name, pod_details=pod_details, pod_logs=pod_logs)
+        report = analyze_pod(pod_name, pod_details=pod_details, pod_logs=pod_logs, namespace=namespace)
     else:
-        report = analyze_pod(pod_name)
+        report = analyze_pod(pod_name, namespace=namespace)
 
     print(report)
