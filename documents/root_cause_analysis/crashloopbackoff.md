@@ -1,25 +1,33 @@
 # Root Cause Analysis - CrashLoopBackOff
 
-Symptoms
+## Symptoms
 
-- CrashLoopBackOff
-- Back-off restarting failed container
-- Exit Code 1
+- Pod status shows CrashLoopBackOff
+- Container repeatedly restarts
+- Kubernetes events show Back-off restarting failed container
+- Container may terminate with Exit Code 1
 
-Root Cause
+## Common Root Causes
 
-The application process exits immediately after startup.
-
-Common Causes
-
-- Invalid startup command
+- Application startup failure
+- Invalid container command
 - Missing environment variables
 - Configuration errors
-- Database connection failures
+- Database connection failure
+- Application dependency unavailable
 
-Resolution
+## Recommended Checks
 
-- Check container logs
-- Verify startup command
-- Review environment variables
-- Validate configuration
+- Run kubectl describe pod
+- Run kubectl logs --previous
+- Check container command and arguments
+- Check environment variables
+- Check ConfigMaps and Secrets
+- Check application dependencies
+
+## Recommended Resolution
+
+- Fix the application startup error
+- Correct missing or invalid configuration
+- Validate dependency connectivity
+- Redeploy the workload

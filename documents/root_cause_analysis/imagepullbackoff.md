@@ -1,24 +1,31 @@
 # Root Cause Analysis - ImagePullBackOff
 
-Symptoms
+## Symptoms
 
-- ImagePullBackOff
-- ErrImagePull
-- Failed to pull image
+- Pod status shows ImagePullBackOff
+- Events show ErrImagePull
+- Events show failed to pull image
+- Events show image not found or unauthorized
 
-Root Cause
+## Common Root Causes
 
-Container image cannot be downloaded from the registry.
-
-Common Causes
-
+- Invalid image name
 - Invalid image tag
-- Wrong image name
-- Registry authentication issues
+- Image does not exist in registry
+- Missing image pull secret
+- Registry authentication failure
 
-Resolution
+## Recommended Checks
 
 - Verify image name
 - Verify image tag
-- Verify image exists in registry
-- Check image pull secrets
+- Confirm image exists in the registry
+- Check imagePullSecrets
+- Check registry permissions
+
+## Recommended Resolution
+
+- Update deployment with a valid image reference
+- Push the missing image to the registry
+- Configure imagePullSecrets if using a private registry
+- Redeploy the workload

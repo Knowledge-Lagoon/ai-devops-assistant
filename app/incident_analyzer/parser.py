@@ -22,6 +22,9 @@ ERROR_KEYWORDS = [
     "Unable to connect",
     "Build failed",
     "Deployment failed",
+    "crashed",
+    "failed",
+    "unable",
 ]
 
 
