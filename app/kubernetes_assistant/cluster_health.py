@@ -1,5 +1,6 @@
 import subprocess
 
+from app.kubernetes_assistant.pod_rca import analyze_pod
 
 UNHEALTHY_STATUSES = [
     "CrashLoopBackOff",
@@ -62,15 +63,32 @@ def print_cluster_health():
 
     for pod in pods:
 
-        print(
-            f"Pod: {pod['pod']}"
+    print(
+        f"Pod: {pod['pod']}"
+    )
+
+    print(
+        f"Status: {pod['status']}"
+    )
+
+    print("\nGenerating RCA...\n")
+
+    try:
+
+        report = analyze_pod(
+            pod["pod"],
+            "chaos-lab"
         )
 
+        print(report)
+
+    except Exception as e:
+
         print(
-            f"Status: {pod['status']}"
+            f"Failed to analyze pod: {e}"
         )
 
-        print()
+    print("\n" + "=" * 80 + "\n")
 
 
 if __name__ == "__main__":
