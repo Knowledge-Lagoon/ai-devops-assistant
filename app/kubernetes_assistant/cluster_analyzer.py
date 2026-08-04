@@ -34,6 +34,19 @@ def get_pod_details(pod_name, namespace=None):
     return _run_kubectl("describe", "pod", pod_name, "-n", resolved_namespace)
 
 
-def get_pod_logs(pod_name, namespace=None):
-    resolved_namespace = _resolve_namespace(namespace)
-    return _run_kubectl("logs", pod_name, "-n", resolved_namespace, "--previous")
+def get_pod_logs(pod_name, namespace="default"):
+
+    result = subprocess.run(
+        [
+            "kubectl",
+            "logs",
+            pod_name,
+            "-n",
+            namespace,
+            "--previous"
+        ],
+        capture_output=True,
+        text=True
+    )
+
+    return result.stdout + result.stderr
