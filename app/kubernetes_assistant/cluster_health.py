@@ -62,33 +62,30 @@ def print_cluster_health():
         return
 
     for pod in pods:
-
-    print(
-        f"Pod: {pod['pod']}"
-    )
-
-    print(
-        f"Status: {pod['status']}"
-    )
-
-    print("\nGenerating RCA...\n")
-
-    try:
-
-        report = analyze_pod(
-            pod["pod"],
-            "chaos-lab"
+        print(
+            f"Pod: {pod['pod']}"
         )
-
-        print(report)
-
-    except Exception as e:
 
         print(
-            f"Failed to analyze pod: {e}"
+            f"Status: {pod['status']}"
         )
 
-    print("\n" + "=" * 80 + "\n")
+        print("\nGenerating RCA...\n")
+
+        try:
+            report = analyze_pod(
+                pod["pod"],
+                "chaos-lab"
+            )
+
+            print(report)
+
+        except Exception as e:
+            print(
+                f"Failed to analyze pod: {e}"
+            )
+
+        print("\n" + "=" * 80 + "\n")
 
 
 if __name__ == "__main__":
