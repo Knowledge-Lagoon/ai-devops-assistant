@@ -26,7 +26,9 @@ def analyze_pod(
         pod_name,
         namespace
     )
-
+    print("\n===== POD LOGS =====\n")
+    print(pod_logs) 
+    
     combined = f"""
 === POD DETAILS ===
 
