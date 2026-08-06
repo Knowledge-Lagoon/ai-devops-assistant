@@ -20,7 +20,7 @@ Analyze the CI/CD failure strictly using the evidence provided.
 
 Rules:
 
-- Use only the log evidence and retrieved RAG context.
+- Use only the build log events and retrieved RAG context.
 - Do not speculate.
 - Do not assume tools, platforms, or environments not present in the logs.
 - If information is unknown, state "Unknown".
