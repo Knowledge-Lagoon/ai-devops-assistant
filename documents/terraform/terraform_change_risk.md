@@ -1,19 +1,20 @@
-# Terraform Change Risk Assessment
+# Terraform Change Risk
 
-High Risk Changes
+High Risk
 
-- Security group modifications
 - IAM policy modifications
-- VPC changes
+- Security group changes
 - Route table changes
-- EKS cluster changes
-- Resource deletions
+- VPC modifications
+- EKS modifications
 
-Medium Risk Changes
+Critical Risk
 
-- Autoscaling changes
+- Database deletion
+- State destruction
+- VPC deletion
+
+Medium Risk
+
+- Instance resizing
 - Tag updates
-
-Low Risk Changes
-
-- Minor metadata changes

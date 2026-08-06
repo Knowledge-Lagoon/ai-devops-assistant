@@ -42,3 +42,24 @@ Terraform Configuration:
 
 {terraform}
 """
+
+TERRAFORM_PLAN_REVIEW_PROMPT = """
+You are a Senior Cloud Architect.
+
+Review the Terraform plan output.
+
+Provide:
+
+1. Risk Level
+2. Security Impact
+3. Reliability Impact
+4. Cost Impact
+5. Destructive Changes
+6. Recommendations
+
+Use only the Terraform plan evidence.
+
+Terraform Plan:
+
+{plan}
+"""
