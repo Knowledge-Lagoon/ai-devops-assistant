@@ -1,13 +1,8 @@
 trigger:
 - main
 
-
 pool:
   vmImage: ubuntu-latest
 
 steps:
 - script: mvn clean package
-  displayName: Build
-
-- script: kubectl apply -f deployment.yaml
-  displayName: Deploy

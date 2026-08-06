@@ -18,8 +18,12 @@ def analyze_pipeline(
 
 if __name__ == "__main__":
 
+    pipeline_file = input(
+        "Enter pipeline file path: "
+    ).strip()
+
     with open(
-        "pipelines/Jenkinsfile",
+        pipeline_file,
         "r"
     ) as f:
 
