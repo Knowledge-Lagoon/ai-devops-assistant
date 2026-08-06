@@ -1,0 +1,7 @@
+Starting: Deploy
+
+##[error] Kubernetes deployment failed
+
+##[error] Unable to connect to cluster
+
+Finishing: Deploy
