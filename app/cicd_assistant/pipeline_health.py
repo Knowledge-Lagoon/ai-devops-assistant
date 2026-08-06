@@ -32,11 +32,16 @@ def pipeline_health():
 
             content = f.read()
 
-        report = analyze_pipeline(
-            content
-        )
+        try:
+            report = analyze_pipeline(
+                content
+            )
 
-        print(report)
+            print(report)
+        except Exception as e:
+            print(
+                f"Failed to analyze: {e}"
+            )
 
         print("\n" + "=" * 80 + "\n")
 
