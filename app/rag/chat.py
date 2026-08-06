@@ -33,6 +33,10 @@ def ask_with_rag(request: str) -> str:
     retriever = get_retriever()
 
     documents = retriever.invoke(request)
+    print("\n=== RETRIEVED DOCUMENTS ===\n")
+
+    for doc in documents:
+        print(doc.metadata)
 
     context = "\n\n".join(
         doc.page_content
