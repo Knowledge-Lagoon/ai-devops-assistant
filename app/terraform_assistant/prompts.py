@@ -46,18 +46,44 @@ Terraform Configuration:
 TERRAFORM_PLAN_REVIEW_PROMPT = """
 You are a Senior Cloud Architect.
 
-Review the Terraform plan output.
+Review the Terraform plan output strictly using the plan evidence and retrieved Terraform knowledge base context.
 
-Provide:
+Rules:
+- Do not speculate.
+- Do not mention IAM, secrets, encryption, backups, or cost unless directly visible in the plan.
+- Only report risks supported by the Terraform plan.
+- Always include evidence from the plan.
+- If something is not visible, say "Not observed".
 
-1. Risk Level
-2. Security Impact
-3. Reliability Impact
-4. Cost Impact
-5. Destructive Changes
-6. Recommendations
+Provide the response in this format:
 
-Use only the Terraform plan evidence.
+Terraform Plan Review Report
+
+Risk Level:
+<Low|Medium|High|Critical>
+
+Change Summary:
+<summary>
+
+Security Impact:
+<impact or Not observed>
+
+Reliability Impact:
+<impact or Not observed>
+
+Cost Impact:
+<impact or Not observed>
+
+Destructive Changes:
+<Yes/No and evidence>
+
+Evidence:
+- <plan evidence>
+
+Recommendations:
+- <action 1>
+- <action 2>
+- <action 3>
 
 Terraform Plan:
 
