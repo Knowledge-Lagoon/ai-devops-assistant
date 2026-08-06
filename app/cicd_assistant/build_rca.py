@@ -16,19 +16,27 @@ def analyze_build_log(
     prompt = f"""
 You are a Senior DevOps Engineer.
 
-Perform a CI/CD failure RCA.
+Analyze the CI/CD failure strictly using the evidence provided.
 
-Evidence:
+Rules:
 
-{chr(10).join(events)}
+- Use only the log evidence and retrieved RAG context.
+- Do not speculate.
+- Do not assume tools, platforms, or environments not present in the logs.
+- If information is unknown, state "Unknown".
+- Ground recommendations in the evidence.
 
 Provide:
 
-1. Incident Type
-2. Severity
-3. Root Cause
-4. Evidence
-5. Recommended Actions
+Incident Type:
+Severity:
+Likely Root Cause:
+Evidence:
+Recommended Actions:
+
+Build Log Events:
+
+{chr(10).join(events)}
 """
 
     return ask_with_rag(
