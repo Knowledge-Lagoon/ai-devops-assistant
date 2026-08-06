@@ -26,3 +26,11 @@
 - topic: best-practices
 - doc_type: guidance
 - source_type: curated-starter
+
+# Terraform Best Practices
+
+- Use modules
+- Use remote state
+- Tag resources
+- Use version constraints
+- Avoid duplicated code
