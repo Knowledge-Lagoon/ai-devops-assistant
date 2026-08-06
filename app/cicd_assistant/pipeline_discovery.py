@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 def discover_pipelines():
 
     pipelines = []
