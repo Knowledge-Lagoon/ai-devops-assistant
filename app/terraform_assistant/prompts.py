@@ -43,7 +43,7 @@ Terraform Configuration:
 {terraform}
 """
 
-TERRAFORM_PLAN_REVIEW_PROMPT = """
+TTERRAFORM_PLAN_REVIEW_PROMPT = """
 You are a Senior Cloud Architect.
 
 Review the Terraform plan output strictly using the plan evidence and retrieved Terraform knowledge base context.
