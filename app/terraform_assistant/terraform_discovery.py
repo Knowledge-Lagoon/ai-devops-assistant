@@ -7,9 +7,13 @@ def discover_terraform_files():
 
     terraform_dir = Path("terraform")
 
-    if terraform_dir.exists():
+    if not terraform_dir.exists():
 
-        for file in terraform_dir.rglob("*.tf"):
+        return terraform_files
+
+    for file in terraform_dir.rglob("*.tf"):
+
+        if file.is_file():
 
             terraform_files.append(
                 str(file)

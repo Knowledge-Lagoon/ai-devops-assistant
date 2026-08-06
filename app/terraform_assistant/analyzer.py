@@ -5,15 +5,13 @@ from app.terraform_assistant.prompts import (
 )
 
 
-def analyze_terraform(terraform_text):
+def analyze_terraform(terraform_text: str) -> str:
 
     prompt = TERRAFORM_REVIEW_PROMPT.format(
         terraform=terraform_text
     )
 
-    return ask_with_rag(
-        prompt
-    )
+    return ask_with_rag(prompt)
 
 
 if __name__ == "__main__":
