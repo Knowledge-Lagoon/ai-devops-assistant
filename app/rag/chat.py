@@ -33,6 +33,21 @@ def ask_with_rag(request: str) -> str:
     retriever = get_retriever()
 
     documents = retriever.invoke(request)
+
+    print("\n=== RETRIEVAL DEBUG ===\n")
+
+    for i, doc in enumerate(documents, start=1):
+
+        print(f"Result {i}")
+
+        print(doc.metadata)
+
+        print()
+
+        print(doc.page_content[:300])
+
+        print("\n" + "=" * 80 + "\n")
+
     print("\n=== RETRIEVED DOCUMENTS ===\n")
 
     for doc in documents:
