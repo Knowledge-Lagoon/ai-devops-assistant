@@ -46,8 +46,12 @@ Build Log Events:
 
 if __name__ == "__main__":
 
+    log_file = input(
+        "Enter build log path: "
+    ).strip()
+
     with open(
-        "logs/cicd/jenkins_build_failure.log",
+        log_file,
         "r"
     ) as f:
 

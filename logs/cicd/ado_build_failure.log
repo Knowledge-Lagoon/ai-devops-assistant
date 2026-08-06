@@ -5,3 +5,5 @@ Starting: Deploy
 ##[error] Unable to connect to cluster
 
 Finishing: Deploy
+
+##[error] Task failed
