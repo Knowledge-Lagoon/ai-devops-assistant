@@ -43,6 +43,18 @@ def ask_with_rag(request: str) -> str:
         for doc in documents
     )
 
+    print("\n=== RETRIEVED CONTENT ===\n")
+
+    for doc in documents:
+
+        print(
+            doc.page_content[:500]
+       )
+
+        print(
+            "\n" + "=" * 80 + "\n"
+       )
+
     prompt = f"""
 You are an experienced DevOps Engineer.
 

@@ -12,15 +12,17 @@ High Risk Findings
 
 - cidr_blocks = ["0.0.0.0/0"]
 - Public SSH access
-- Unrestricted ingress
+- Security group exposure
+- Open ingress rule
+- Unrestricted access
+- Public internet access
 
-Risk
+Risk Level
 
-Opening ingress to 0.0.0.0/0 exposes resources to the public Internet.
+High
 
-Recommended Actions
+Recommendations
 
 - Restrict CIDR ranges
 - Use VPN access
 - Use Bastion Hosts
-- Follow least-privilege network access
