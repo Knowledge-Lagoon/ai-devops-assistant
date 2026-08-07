@@ -28,11 +28,20 @@ def get_retriever():
     )
 
 
-def ask_with_rag(request: str) -> str:
+def ask_with_rag(
+    request: str,
+    retrieval_query: str | None = None
+) -> str:
 
-    retriever = get_retriever()
+#    retriever = get_retriever()
 
-    documents = retriever.invoke(request)
+    query = (
+    retrieval_query
+    if retrieval_query
+    else request
+)
+
+    documents = retriever.invoke(query)
 
     print("\n=== QUERY SENT TO RAG ===\n")
     print(request)

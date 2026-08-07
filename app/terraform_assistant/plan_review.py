@@ -1,3 +1,5 @@
+import re
+
 from app.rag.chat import ask_with_rag
 
 from app.terraform_assistant.prompts import (
@@ -17,13 +19,23 @@ def detect_plan_risks(plan_text: str) -> list[str]:
             "High risk: Open ingress rule detected with cidr_blocks = [\"0.0.0.0/0\"]."
         )
 
-    if "to destroy" in lower_text:
+    match = re.search(
+        r"(\d+)\s+to destroy",
+        lower_text
+    )
 
-        if "1 to destroy" in lower_text or "destroy" in lower_text:
+    if match:
+
+        destroy_count = int(
+            match.group(1)
+       )
+
+        if destroy_count > 0:
 
             findings.append(
-                "Potential destructive change detected in Terraform plan."
-            )
+                f"Potential destructive change detected. "
+                f"{destroy_count} resource(s) will be destroyed."
+           )
 
     if "aws_db_instance" in lower_text and "destroy" in lower_text:
 
@@ -78,8 +90,9 @@ Terraform Plan Output:
     )
 
     return ask_with_rag(
-        prompt
-    )
+        prompt,
+        retrieval_query=plan_text
+   )
 
 
 if __name__ == "__main__":
