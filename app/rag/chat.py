@@ -35,7 +35,7 @@ def ask_with_rag(request: str) -> str:
     documents = retriever.invoke(request)
 
     print("\n=== QUERY SENT TO RAG ===\n")
-    print(query)
+    print(request)
 
     print("\n=== RETRIEVAL DEBUG ===\n")
 
