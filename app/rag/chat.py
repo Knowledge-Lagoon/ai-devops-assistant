@@ -33,7 +33,7 @@ def ask_with_rag(
     retrieval_query: str | None = None
 ) -> str:
 
-#    retriever = get_retriever()
+    retriever = get_retriever()
 
     query = (
     retrieval_query
