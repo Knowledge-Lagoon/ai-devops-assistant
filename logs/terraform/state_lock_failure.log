@@ -1,0 +1,5 @@
+Error acquiring the state lock
+
+ConditionalCheckFailedException
+
+Failed to lock state

@@ -1,0 +1,5 @@
+Error: AccessDenied
+
+User is not authorized to perform ec2:CreateSecurityGroup
+
+Error: UnauthorizedOperation
