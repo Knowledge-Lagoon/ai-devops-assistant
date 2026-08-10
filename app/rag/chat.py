@@ -65,10 +65,10 @@ def ask_with_rag(
 #    for doc in documents:
 #        print(doc.metadata)
 
-#    context = "\n\n".join(
-#        doc.page_content
-#        for doc in documents
-#    )
+    context = "\n\n".join(
+        doc.page_content
+        for doc in documents
+    )
 
 #    print("\n=== RETRIEVED CONTENT ===\n")
 
