@@ -43,44 +43,44 @@ def ask_with_rag(
 
     documents = retriever.invoke(query)
 
-    print("\n=== QUERY SENT TO RAG ===\n")
-    print(request)
+#    print("\n=== QUERY SENT TO RAG ===\n")
+#    print(request)
 
-    print("\n=== RETRIEVAL DEBUG ===\n")
+#    print("\n=== RETRIEVAL DEBUG ===\n")
 
-    for i, doc in enumerate(documents, start=1):
+#    for i, doc in enumerate(documents, start=1):
 
-        print(f"Result {i}")
+#        print(f"Result {i}")
 
-        print(doc.metadata)
+#        print(doc.metadata)
 
-        print()
+#        print()
 
-        print(doc.page_content[:300])
+#        print(doc.page_content[:300])
 
-        print("\n" + "=" * 80 + "\n")
+#        print("\n" + "=" * 80 + "\n")
 
-    print("\n=== RETRIEVED DOCUMENTS ===\n")
+#    print("\n=== RETRIEVED DOCUMENTS ===\n")
 
-    for doc in documents:
-        print(doc.metadata)
+#    for doc in documents:
+#        print(doc.metadata)
 
-    context = "\n\n".join(
-        doc.page_content
-        for doc in documents
-    )
+#    context = "\n\n".join(
+#        doc.page_content
+#        for doc in documents
+#    )
 
-    print("\n=== RETRIEVED CONTENT ===\n")
+#    print("\n=== RETRIEVED CONTENT ===\n")
 
-    for doc in documents:
+#    for doc in documents:
 
-        print(
-            doc.page_content[:500]
-       )
+#        print(
+#            doc.page_content[:500]
+#       )
 
-        print(
-            "\n" + "=" * 80 + "\n"
-       )
+#        print(
+#            "\n" + "=" * 80 + "\n"
+#       )
 
     prompt = f"""
 You are an experienced DevOps Engineer.
