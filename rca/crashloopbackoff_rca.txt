@@ -1,0 +1,18 @@
+Incident Type:
+CrashLoopBackOff
+
+Severity:
+High
+
+Likely Root Cause:
+Application startup failure
+
+Evidence:
+- Exit Code 1
+- CrashLoopBackOff
+- Back-off restarting failed container
+
+Recommended Actions:
+- Review pod logs
+- Verify configuration
+- Restart workload
