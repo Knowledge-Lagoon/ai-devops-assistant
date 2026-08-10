@@ -25,4 +25,3 @@ RCA Report:
 
 {rca}
 """
-``
