@@ -4,6 +4,7 @@ import requests
 from app.runbook_service.confluence_client import (
     CONFLUENCE_URL,
     CONFLUENCE_SPACE_ID,
+    DEVOPS_RUNBOOKS_PAGE_ID,
     ATLASSIAN_EMAIL,
     ATLASSIAN_API_TOKEN
 )
