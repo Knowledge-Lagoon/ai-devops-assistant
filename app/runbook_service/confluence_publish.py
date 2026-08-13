@@ -12,9 +12,13 @@ def create_runbook_page(
     title: str,
     content: str
 ):
+    print(
+        "Space ID:",
+        CONFLUENCE_SPACE_ID
+    )
 
     url = f"{CONFLUENCE_URL}/api/v2/pages"
-
+    url = f"{CONFLUENCE_URL}/api/v2/pages"
     payload = {
         "spaceId": CONFLUENCE_SPACE_ID,
         "status": "current",
