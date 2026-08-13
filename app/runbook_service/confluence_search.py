@@ -79,4 +79,17 @@ def get_page_content(page_id: str):
 
     body = data["body"]["storage"]["value"]
 
-    print("\n==
+    print("\n=== PAGE CONTENT ===")
+    print(body[:1000])
+
+    return body
+
+
+if __name__ == "__main__":
+
+    title = "CrashLoopBackOff"
+
+    page_id = find_page_by_title(title)
+
+    if page_id:
+        get_page_content(page_id)
