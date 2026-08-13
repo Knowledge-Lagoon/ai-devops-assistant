@@ -7,28 +7,24 @@ from app.runbook_service.confluence_client import (
 )
 
 
-def find_page_by_title(
-    title: str
+url = f"{CONFLUENCE_URL}/api/v2/pages"
+
+response = requests.get(
+    url,
+    auth=(
+        ATLASSIAN_EMAIL,
+        ATLASSIAN_API_TOKEN
+    )
+)
+
+data = response.json()
+
+for page in data.get(
+    "results",
+    []
 ):
 
-    url = (
-        f"{CONFLUENCE_URL}/api/v2/pages"
-    )
-
-    response = requests.get(
-        url,
-        auth=(
-            ATLASSIAN_EMAIL,
-            ATLASSIAN_API_TOKEN
-        )
-    )
-
-    print(response.status_code)
-    print(response.text[:500])
-
-
-if __name__ == "__main__":
-
-    find_page_by_title(
-        "CrashLoopBackOff"
+    print(
+        page["title"],
+        page["id"]
     )
