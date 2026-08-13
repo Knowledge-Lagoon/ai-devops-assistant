@@ -22,38 +22,55 @@ def get_or_create_runbook(
 
     if existing_page:
 
+        page_url = (
+            "https://knowledge-lagoon.atlassian.net/wiki/"
+            f"spaces/IS/pages/"
+            f"{existing_page['id']}/"
+            f"{existing_page['title']}"
+        )
+
         print(
             "\n=== EXISTING RUNBOOK FOUND ===\n"
         )
 
         print(
-            f"Title: {existing_page['title']}"
+            page_url
         )
 
-        print(
-            f"Page ID: {existing_page['id']}"
-        )
-
-        print(
-            f"\nURL:\n"
-            f"https://knowledge-lagoon.atlassian.net/wiki/spaces/IS/pages/"
-            f"{existing_page['id']}/"
-            f"{existing_page['title']}"
-        )
-
-        return existing_page
+        return {
+            "status": "existing",
+            "url": page_url
+        }
 
     print(
-        "\n=== GENERATING NEW RUNBOOK ===\n"
+        "\n=== GENERATING RUNBOOK ===\n"
     )
 
     runbook = generate_runbook(
         rca_text
     )
 
-    create_runbook_page(
+    page = create_runbook_page(
         title=incident_type,
         content=runbook
     )
 
-    return runbook
+    page_url = (
+        "https://knowledge-lagoon.atlassian.net/wiki/"
+        f"spaces/IS/pages/"
+        f"{page['id']}/"
+        f"{page['title']}"
+    )
+
+    print(
+        "\n=== NEW RUNBOOK CREATED ===\n"
+    )
+
+    print(
+        page_url
+    )
+
+    return {
+        "status": "created",
+        "url": page_url
+    }
