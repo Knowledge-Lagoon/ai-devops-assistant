@@ -2,11 +2,10 @@ import requests
 
 from app.runbook_service.confluence_client import (
     CONFLUENCE_URL,
-    CONFLUENCE_SPACE,
+    CONFLUENCE_SPACE_ID,
     ATLASSIAN_EMAIL,
     ATLASSIAN_API_TOKEN
 )
-
 
 def create_page(
     title: str,
@@ -17,7 +16,7 @@ def create_page(
     url = f"{CONFLUENCE_URL}/api/v2/pages"
 
     payload = {
-        "spaceId": CONFLUENCE_SPACE,
+        "spaceId": CONFLUENCE_SPACE_ID,
         "status": "current",
         "title": title,
         "parentId": parent_id,
@@ -63,3 +62,8 @@ Increase memory limits.
 Review application memory usage.
 """
     )    
+
+    print("\n=== CREATE PAGE REQUEST ===\n")
+    print("Title:", title)
+    print("Parent ID:", parent_id)
+    print("Space ID:", CONFLUENCE_SPACE_ID)

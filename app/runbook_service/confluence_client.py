@@ -18,3 +18,7 @@ ATLASSIAN_EMAIL = os.getenv(
 ATLASSIAN_API_TOKEN = os.getenv(
     "CONFLUENCE_API_TOKEN"
 )
+
+CONFLUENCE_SPACE_ID = os.getenv(
+    "CONFLUENCE_SPACE_ID"
+)
