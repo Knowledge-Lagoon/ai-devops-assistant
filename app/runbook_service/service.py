@@ -2,7 +2,7 @@ from app.runbook_service.confluence_search import (
     find_page_by_title
 )
 
-from app.runbook_generator.generator import (
+from app.runbook_service.generator import (
     generate_runbook
 )
 
