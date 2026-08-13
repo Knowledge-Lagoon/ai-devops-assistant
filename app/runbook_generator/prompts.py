@@ -3,6 +3,8 @@ You are a Senior Site Reliability Engineer.
 
 Generate an operational runbook from the RCA report.
 
+Incident Type: <incident type>
+
 Output sections:
 
 Runbook Title
