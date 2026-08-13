@@ -36,51 +36,19 @@ def ask_with_rag(
     retriever = get_retriever()
 
     query = (
-    retrieval_query
-    if retrieval_query
-    else request
-)
+        retrieval_query
+        if retrieval_query
+        else request
+    )
 
-    documents = retriever.invoke(query)
-
-#    print("\n=== QUERY SENT TO RAG ===\n")
-#    print(request)
-
-#    print("\n=== RETRIEVAL DEBUG ===\n")
-
-#    for i, doc in enumerate(documents, start=1):
-
-#        print(f"Result {i}")
-
-#        print(doc.metadata)
-
-#        print()
-
-#        print(doc.page_content[:300])
-
-#        print("\n" + "=" * 80 + "\n")
-
-#    print("\n=== RETRIEVED DOCUMENTS ===\n")
-
-#    for doc in documents:
-#        print(doc.metadata)
+    documents = retriever.invoke(
+        query
+    )
 
     context = "\n\n".join(
         doc.page_content
         for doc in documents
     )
-
-#    print("\n=== RETRIEVED CONTENT ===\n")
-
-#    for doc in documents:
-
-#        print(
-#            doc.page_content[:500]
-#       )
-
-#        print(
-#            "\n" + "=" * 80 + "\n"
-#       )
 
     prompt = f"""
 You are an experienced DevOps Engineer.
@@ -88,9 +56,11 @@ You are an experienced DevOps Engineer.
 Use ONLY the provided context to answer the request.
 
 Context:
+
 {context}
 
 Request:
+
 {request}
 
 Answer:
@@ -101,16 +71,38 @@ Answer:
         base_url=OLLAMA_HOST
     )
 
-    response = llm.invoke(prompt)
+    response = llm.invoke(
+        prompt
+    )
 
     return response
 
 
-def ask_question(question: str) -> str:
+def ask_llm(
+    request: str
+) -> str:
+
+    llm = OllamaLLM(
+        model=OLLAMA_MODEL,
+        base_url=OLLAMA_HOST
+    )
+
+    response = llm.invoke(
+        request
+    )
+
+    return response
+
+
+def ask_question(
+    question: str
+) -> str:
     """
     Backward compatibility with Project 2.
     """
-    return ask_with_rag(question)
+    return ask_with_rag(
+        question
+    )
 
 
 if __name__ == "__main__":
@@ -119,7 +111,4 @@ if __name__ == "__main__":
         "Ask your DevOps question: "
     )
 
-    answer = ask_question(question)
-
-    print("\nAnswer:")
-    print(answer)
+    answer
