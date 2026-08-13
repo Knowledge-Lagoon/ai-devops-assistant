@@ -7,9 +7,9 @@ from app.runbook_service.confluence_client import (
     ATLASSIAN_API_TOKEN
 )
 
-def create_page(
+
+def create_runbook_page(
     title: str,
-    parent_id: str,
     content: str
 ):
 
@@ -19,7 +19,6 @@ def create_page(
         "spaceId": CONFLUENCE_SPACE_ID,
         "status": "current",
         "title": title,
-        "parentId": parent_id,
         "body": {
             "representation": "storage",
             "value": f"""
@@ -29,12 +28,6 @@ def create_page(
         }
     }
 
-    # Add the print statements here
-    print("\n=== CREATE PAGE REQUEST ===\n")
-    print("Title:", title)
-    print("Parent ID:", parent_id)
-    print("Space ID:", CONFLUENCE_SPACE_ID)
-    
     response = requests.post(
         url,
         json=payload,
@@ -47,24 +40,40 @@ def create_page(
         }
     )
 
-    print("Status:", response.status_code)
-    print(response.text)
+    print(
+        "\n=== CREATE PAGE RESPONSE ===\n"
+    )
 
-    return response
+    print(
+        "Status:",
+        response.status_code
+    )
+
+    print(
+        response.text
+    )
+
+    response.raise_for_status()
+
+    return response.json()
+
 
 if __name__ == "__main__":
 
-    create_page(
+    create_runbook_page(
         title="OOMKilled",
-        parent_id="262618",
         content="""
 Incident Type: OOMKilled
 
 Symptoms:
-Container terminated due to memory limits.
+Container terminated due to memory pressure.
 
-Resolution:
-Increase memory limits.
-Review application memory usage.
+Root Cause:
+Pod exceeded configured memory limits.
+
+Resolution Steps:
+1. Review pod memory usage.
+2. Increase memory limits.
+3. Tune the application.
 """
-    )    
+    )
