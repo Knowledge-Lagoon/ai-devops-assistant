@@ -6,65 +6,30 @@ from app.runbook_service.confluence_client import (
     ATLASSIAN_API_TOKEN
 )
 
+url = f"{CONFLUENCE_URL}/api/v2/pages"
 
-def find_page_by_title(
-    title: str
-):
+response = requests.get(
+    url,
+    auth=(
+        ATLASSIAN_EMAIL,
+        ATLASSIAN_API_TOKEN
+    )
+)
 
-    url = f"{CONFLUENCE_URL}/api/v2/pages"
+data = response.json()
 
-    response = requests.get(
-        url,
-        auth=(
-            ATLASSIAN_EMAIL,
-            ATLASSIAN_API_TOKEN
-        )
+for page in data.get("results", []):
+
+    print(
+        f"Title: {page['title']}"
     )
 
-    response.raise_for_status()
-
-    data = response.json()
-
-    for page in data.get(
-        "results",
-        []
-    ):
-
-        if (
-            page["title"].lower()
-            == title.lower()
-        ):
-
-            return {
-                "id": page["id"],
-                "title": page["title"]
-            }
-
-    return None
-
-
-if __name__ == "__main__":
-
-    result = find_page_by_title(
-        "CrashLoopBackOff"
+    print(
+        f"ID: {page['id']}"
     )
 
-    if result:
+    print(
+        f"Parent: {page.get('parentId')}"
+    )
 
-        print(
-            "\nRunbook Found\n"
-        )
-
-        print(
-            f"Title: {result['title']}"
-        )
-
-        print(
-            f"Page ID: {result['id']}"
-        )
-
-    else:
-
-        print(
-            "\nRunbook Not Found\n"
-        )
+    print("-" * 50)
