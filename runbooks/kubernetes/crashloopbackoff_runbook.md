@@ -1,45 +1,22 @@
-Runbook Title: Resolving Kubernetes Pods in a State of 'CrashLoopBackOff' due to Application Startup Failure
+Runbook Title: Kubernetes Pod Issue - CrashLoopBackOff Resolution Guide
 
+Symptoms: The status of the affected Kubernetes pod shows 'CrashLoopBackOff', which indicates that it's repeatedly restarting. Events associated with this behavior show back-off, and containers involved may terminate with Exit Code 1 upon failure to start correctly.
 
-Symptoms:
+Business Impact: This issue has led to unavailability of the application running within a pod, potentially affecting business operations reliant on its functionality or data processing capabilities provided by it. If this is part of a production environment and if not addressed promptly, customer experience can be impacted along with any time-sensitive processes that depend upon these services.
 
-- The status of the pod remains as CrashLoopBackOff.
+Root Cause: The likely root cause based on the evidence collected (Exit Code 1, 'CrashLoopBackOff', back-off restarts) is an application startup failure within Kubernetes pods. This could stem from various issues such as invalid container commands or missing required environment variables. Configuration errors and unavailable dependencies might also be contributing factors if they impact the application'semaintenance'.
 
-- Containers within the pod repeatedly restart with Back-off messages shown by kubelet events.
+Resolution Steps: To resolve this issue, follow these operational steps - 
+1. Execute `kubectl describe pod <pod-name>` to inspect detailed error messages related to container restarts and startup failures within the affected pods.
+2. Review logs by running `kubectl logs --previous <container-name>`. Look for any patterns or exceptions that may indicate why the application fails to start, especially noting Exit Code 1 outputs in these logs.
+3. Verify if all required environment variables are set and configured correctly within both pod specification files (e.g., Deployment descriptors) and container runtime environments using `kubectl get env` for checking existing settings or directly editing the relevant properties based on the application's needs.
+4. Ensure that configurations such as resource limits, tolerances, and requests in Pod Specifications are accurate to avoid any misconfigured resources being allocated which might cause startup issues. Make adjustments where necessary with `kubectl edit` or update deployment/pod specifications accordingly.
+5. Test if application dependencies required at runtime for the pod's containerized application can be accessed and run correctly using a local environment setup that mirrors Kubernetes as closely as possible to accurately replicate conditions causing startup failure in production. Use `kubectl port-forward` or similar methods when available, otherwise consider alternative testing strategies like Containers on AWS Fargate for more dynamic containerized environments not supported by native kubectl forwarding capabilities.
+6. Restart the workload using Kubernetes' restart policy if needed: `kubectl po rollout undeploy <deployment-name> --force` followed by `kubectl po rollout create replace --timeout=60s`. Monitor pod status and logs to ensure that it does not enter 'CrashLoopBackOff'.
+7. If the issue persists, escalate as per standard Operations Procedure (OP) - notify on-call engineers or system owners for further investigation if necessary resources have been deployed/updated recently which might influence behavior inadvertently such as container registries changes, Kubernetes version updates etc.
 
-- Exit Code 1 observed upon container termination, which indicates an error occurred during startup or execution.
+Validation Checks: After each resolution step is executed and before proceed0r escalation - validate pod status with `kubectl get pod <pod-name>` to ensure it's no longer 'CrashLoopBackOff'. Observe application logs for any signs of the startup failure condition, ensuring they have ceased following changes made. If successful, monitor over a short period (e.g., 15 minutes) using `kubectl get pod <pod-name>` to confirm stability before concluding resolution.
 
+Escalation Path: Should application failures continue after implementing the runbook steps or if immediate intervention is required due to business implications, escalate following your organization's incident response plan for higher severity incidents typically involving Site Reliability Engineering (SRE) teams and senior management/stakeholders.
 
-Business Impact:
-
-A 'CrashLoopBackOff' state results in a failed deployment of services, leading to potential downtime and service unavailability for users relying on the application functionalities hosted within this pod. This could adversely affect user experience and productivity. Furthermore, it can increase operational costs due to manual interventions required to resolve such issues.
-
-
-Root Cause:
-
-The likely root cause is an 'Application startup failure,' as evidenced by the following signs: Exit Code 1 from container termination and CrashLoopBackOff status in Kubernetes events, which suggests that containers are unable to start or remain healthy due to application-level issues.
-
-
-Resolution Steps:
-
-To address this issue effectively, follow these steps:
-
-
-1. Run `kubectl describe pod [POD_NAME]` for detailed insights into the deployment status and events that led to 'CrashLoopBackOff.' Look out specifically for any application-level exceptions or errors mentioned in recent logs before termination with Exit Code 1. Identify whether it is related to environment variables, configuration issues, dependencies not available at runtime, etc.
-
-2. Once the root cause of startup failure has been identified:
-
-   - For environmental issue (e.g., incorrect/missing ENV vars), update and apply necessary changes using `kubectl set env` commands or equivalent Kubernetes mechanisms for environment variable management. Validate that these variables are correctly provisioned in your deployment manifests if they need to persist across restarts.
-
-   - For misconfigurations, review the application’s configuration files/directives against best practices and ensure compatibility with expected inputs by kubelet or container runtime. Apply changes using `kubectl apply` for deployments that support live updates without downtown interruption. If not compatible in a rolling update fashion:
-   
-     - Rollback to the last known good configuration, then reapply any necessary fixes as one-off deployment actions if required (e.g., via Helm charts or Kubernetes manifests). Ensure rollback procedures are tested and documented for future incidents. 
-   - For dependencies unavailable at runtime: Assess whether they're external services that need to be up before the application starts, then ensure their availability using monitoring tools like Prometheus with alert rules specificified or integrate them into your CI/CD pipeline’s dependency checks and deployments for automated health-checking.
-   - Restart workload: If no immediate resolution is found after applying fixes above, consider forcefully restart the pod if necessary to clear stateful components that might be causing issues (e.g., via `kubectl replace`). Note this should typically be a last resort as it leads directly into disruption and potential impact on end-users without failback mechanisms in place.
-   
-3. Validation Checks: After resolving the issue, validate that pod status changes to Running by executing `kubectl get pod` with appropriate label selectors if needed. Monitor logs using commands such as 'kubectl logs -f [POD_NAME] --previous' and ensure no errors are present in recent container restarts which could indicate a recurring issue or that the problem persists despite applying fixes.
-
-4. Escalation Path: If issues persist after initial troubleshooting, escalate to your infrastructure team for deeper system-level investigations such as network policies blocking traffic required by Kubernetes (check using `kubectl get clusterrolebindings`, etc.), container runtime configurations that might be incorrect or misconfigured.
-
-5. References: Consult the official documentation of application, database connectivity and orchestration systems for guidance on best practices in configuration management and service deployment strategies to prevent similar issues from recurring frequently without impactful disruption [e.g., Kubernetes Documentation, Application-specific Deployment Guides].
-
+References: Kubernetes Official Documentation - Pod Status CrashLoopBackOff; Common root causes of 'CrashLoopBackOff'; Best practices on troubleshooting startup failures within containers in a managed environment or production systems, as outlined by the SRE community and industry standard texts/guides.
