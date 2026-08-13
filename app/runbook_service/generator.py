@@ -1,14 +1,9 @@
-from pathlib import Path
 import re
 
 from app.rag.chat import ask_llm
 
 from app.runbook_service.prompts import (
     RUNBOOK_GENERATION_PROMPT
-)
-
-from app.runbook_service.registry import (
-    find_runbook_by_incident
 )
 
 
@@ -42,48 +37,10 @@ def generate_runbook(
     )
 
 
-def save_runbook(
-    runbook: str,
-    category: str,
-    runbook_name: str
-):
-
-    output_dir = Path(
-        f"runbooks/{category}"
-    )
-
-    output_dir.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
-    output_file = (
-        output_dir /
-        f"{runbook_name}.md"
-    )
-
-    with open(
-        output_file,
-        "w"
-    ) as f:
-
-        f.write(runbook)
-
-    return str(output_file)
-
-
 if __name__ == "__main__":
 
     rca_file = input(
         "Enter RCA file path: "
-    ).strip()
-
-    category = input(
-        "Enter category (kubernetes/cicd/terraform): "
-    ).strip().lower()
-
-    runbook_name = input(
-        "Enter runbook name: "
     ).strip()
 
     with open(
@@ -101,48 +58,16 @@ if __name__ == "__main__":
         f"\nIncident Type: {incident_type}"
     )
 
-    existing_runbook = (
-        find_runbook_by_incident(
-            incident_type
-        )
+    print(
+        "\nGenerating runbook...\n"
     )
 
-    if existing_runbook:
+    runbook = generate_runbook(
+        rca_text
+    )
 
-        print(
-            "\nExisting runbook found:"
-        )
+    print(
+        "\n===== GENERATED RUNBOOK =====\n"
+    )
 
-        print(
-            existing_runbook
-        )
-
-        print(
-            "\nSkipping generation."
-        )
-
-    else:
-
-        print(
-            "\nGenerating runbook...\n"
-        )
-
-        runbook = generate_runbook(
-            rca_text
-        )
-
-        print(
-            "\n===== GENERATED RUNBOOK =====\n"
-        )
-
-        print(runbook)
-
-        output_file = save_runbook(
-            runbook,
-            category,
-            runbook_name
-        )
-
-        print(
-            f"\nRunbook saved to: {output_file}"
-        )
+    print(runbook)
