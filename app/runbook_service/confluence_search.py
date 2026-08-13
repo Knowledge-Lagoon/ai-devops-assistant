@@ -94,4 +94,49 @@ def search_pages():
 
 def get_crashloop_page():
 
-    page_id = "
+    page_id = "327685"
+
+    url = (
+        f"{CONFLUENCE_URL}"
+        f"/rest/api/content/{page_id}"
+    )
+
+    response = requests.get(
+        url,
+        auth=(
+            ATLASSIAN_EMAIL,
+            ATLASSIAN_API_TOKEN
+        ),
+        params={
+            "expand": "body.storage"
+        }
+    )
+
+    print("\n" + "=" * 60)
+    print("PAGE CONTENT TEST")
+    print("=" * 60)
+
+    print(f"STATUS : {response.status_code}")
+    print(f"URL    : {response.url}")
+
+    if response.status_code != 200:
+        print(response.text)
+        return
+
+    data = response.json()
+
+    print("SUCCESS")
+    print(data["title"])
+
+    body = data["body"]["storage"]["value"]
+
+    print(body[:1000])
+
+
+if __name__ == "__main__":
+
+    test_confluence()
+
+    search_pages()
+
+    get_crashloop_page()
