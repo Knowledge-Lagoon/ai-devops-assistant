@@ -34,16 +34,25 @@ def get_or_create_runbook(
         )
 
         print(
-            page_url
+            f"Title: {existing_page['title']}"
+        )
+
+        print(
+            f"Page ID: {existing_page['id']}"
+        )
+
+        print(
+            f"\nURL:\n{page_url}"
         )
 
         return {
             "status": "existing",
+            "incident_type": incident_type,
             "url": page_url
         }
 
     print(
-        "\n=== GENERATING RUNBOOK ===\n"
+        "\n=== GENERATING NEW RUNBOOK ===\n"
     )
 
     runbook = generate_runbook(
@@ -72,5 +81,6 @@ def get_or_create_runbook(
 
     return {
         "status": "created",
+        "incident_type": incident_type,
         "url": page_url
     }
