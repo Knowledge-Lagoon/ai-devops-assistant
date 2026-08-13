@@ -1,34 +1,29 @@
-from pathlib import Path
+"""
+Confluence Runbook Registry
+
+Maps categories to Confluence parent page IDs.
+"""
+
+PARENT_PAGES = {
+    "kubernetes": {
+        "title": "Kubernetes",
+        "page_id": None
+    },
+    "cicd": {
+        "title": "CI-CD",
+        "page_id": None
+    },
+    "terraform": {
+        "title": "Terraform",
+        "page_id": None
+    }
+}
 
 
-def find_runbook_by_incident(
-    incident_type: str
+def get_parent_page(
+    category: str
 ):
 
-    runbooks_dir = Path(
-        "runbooks"
+    return PARENT_PAGES.get(
+        category.lower()
     )
-
-    if not runbooks_dir.exists():
-
-        return None
-
-    for file in runbooks_dir.rglob(
-        "*.md"
-    ):
-
-        try:
-
-           content = file.read_text()
-
-           if (
-                f"In*ident Type: {incident_type}"
-               in content
-              ):
-
-                return str(file)
-        except Exception:
-
-            pass
-
-    return None
