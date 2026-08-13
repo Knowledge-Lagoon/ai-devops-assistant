@@ -85,7 +85,7 @@ def create_runbook_page(
 
 if __name__ == "__main__":
 
-    create_runbook_page(
+        create_runbook_page(
         title="TestRunbook999",
         content="""
 Incident Type: TestRunbook999
@@ -99,5 +99,5 @@ Test root cause
 Resolution:
 Test resolution
 """
-    )
+        )
  
