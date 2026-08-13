@@ -27,21 +27,37 @@ def create_runbook_page(
         CONFLUENCE_SPACE_ID
     )
 
+    print(
+        "Parent ID:",
+        DEVOPS_RUNBOOKS_PAGE_ID
+    )
+
     url = f"{CONFLUENCE_URL}/api/v2/pages"
 
     payload = {
-    "spaceId": CONFLUENCE_SPACE_ID,
-    "status": "current",
-    "title": title,
-    "parentId": DEVOPS_RUNBOOKS_PAGE_ID,
-    "body": {
-        "representation": "storage",
-        "value": f"""
+        "spaceId": CONFLUENCE_SPACE_ID,
+        "parentId": DEVOPS_RUNBOOKS_PAGE_ID,
+        "status": "current",
+        "title": title,
+        "body": {
+            "representation": "storage",
+            "value": f"""
 <h1>{title}</h1>
 <pre>{content}</pre>
 """
+        }
     }
-}
+
+    print(
+        "\n=== REQUEST PAYLOAD ===\n"
+    )
+
+    print(
+        json.dumps(
+            payload,
+            indent=2
+        )
+    )
 
     response = requests.post(
         url,
@@ -51,7 +67,8 @@ def create_runbook_page(
             ATLASSIAN_API_TOKEN
         ),
         headers={
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         }
     )
 
@@ -63,15 +80,6 @@ def create_runbook_page(
         "Status:",
         response.status_code
     )
-print(
-    "\n=== RESPONSE BODY ===\n"
-)
-
-print(
-    response.text
-)
-
-if response.status_code >= 400:
 
     print(
         "\n=== RESPONSE BODY ===\n"
@@ -88,14 +96,14 @@ if response.status_code >= 400:
     print(
         "\n=== CONFLUENCE RESPONSE ===\n"
     )
-    
+
     print(
         json.dumps(
             data,
             indent=2
         )
     )
-    
+
     return {
         "id": data["id"],
         "title": data["title"]
@@ -104,19 +112,20 @@ if response.status_code >= 400:
 
 if __name__ == "__main__":
 
-        create_runbook_page(
-        title="TestRunbook999",
+    create_runbook_page(
+        title="PodPending",
         content="""
-Incident Type: TestRunbook999
+Incident Type: PodPending
 
 Symptoms:
-Test symptoms
+Pods remain in Pending state.
 
 Root Cause:
-Test root cause
+Insufficient cluster resources.
 
-Resolution:
-Test resolution
+Resolution Steps:
+1. Check node capacity.
+2. Check resource requests.
+3. Scale cluster if required.
 """
-        )
- 
+    )
