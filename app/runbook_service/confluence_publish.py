@@ -30,17 +30,18 @@ def create_runbook_page(
     url = f"{CONFLUENCE_URL}/api/v2/pages"
 
     payload = {
-        "spaceId": CONFLUENCE_SPACE_ID,
-        "status": "current",
-        "title": title,
-        "body": {
-            "representation": "storage",
-            "value": f"""
+    "spaceId": CONFLUENCE_SPACE_ID,
+    "status": "current",
+    "title": title,
+    "parentId": DEVOPS_RUNBOOKS_PAGE_ID,
+    "body": {
+        "representation": "storage",
+        "value": f"""
 <h1>{title}</h1>
 <pre>{content}</pre>
 """
-        }
     }
+}
 
     response = requests.post(
         url,
