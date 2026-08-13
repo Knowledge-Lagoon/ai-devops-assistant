@@ -1,22 +1,23 @@
-import requests
+if __name__ == "__main__":
 
-from app.runbook_service.confluence_client import (
-    CONFLUENCE_URL,
-    ATLASSIAN_EMAIL,
-    ATLASSIAN_API_TOKEN
-)
+    pages_to_find = [
+        "Kubernetes",
+        "CI-CD",
+        "Terraform"
+    ]
 
-page_id = "98328"
+    for page_name in pages_to_find:
 
-url = f"{CONFLUENCE_URL}/api/v2/pages/{page_id}"
+        result = find_page_by_title(
+            page_name
+        )
 
-response = requests.get(
-    url,
-    auth=(
-        ATLASSIAN_EMAIL,
-        ATLASSIAN_API_TOKEN
-    )
-)
+        print("\n-------------------")
 
-print(response.status_code)
-print(response.text)
+        print(
+            f"Searching: {page_name}"
+        )
+
+        print(
+            result
+        )
