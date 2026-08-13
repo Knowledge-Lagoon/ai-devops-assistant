@@ -111,4 +111,9 @@ if __name__ == "__main__":
         "Ask your DevOps question: "
     )
 
-    answer
+    answer = ask_question(
+        question
+    )
+
+    print("\nAnswer:")
+    
