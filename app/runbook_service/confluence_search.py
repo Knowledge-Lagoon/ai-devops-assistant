@@ -6,7 +6,9 @@ from app.runbook_service.confluence_client import (
     ATLASSIAN_API_TOKEN
 )
 
-url = f"{CONFLUENCE_URL}/api/v2/pages"
+page_id = "98328"
+
+url = f"{CONFLUENCE_URL}/api/v2/pages/{page_id}"
 
 response = requests.get(
     url,
@@ -16,20 +18,5 @@ response = requests.get(
     )
 )
 
-data = response.json()
-
-for page in data.get("results", []):
-
-    print(
-        f"Title: {page['title']}"
-    )
-
-    print(
-        f"ID: {page['id']}"
-    )
-
-    print(
-        f"Parent: {page.get('parentId')}"
-    )
-
-    print("-" * 50)
+print(response.status_code)
+print(response.text)
