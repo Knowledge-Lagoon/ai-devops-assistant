@@ -26,7 +26,7 @@ def find_runbook_by_incident(
                in content
               ):
 
-                return str(file)*
+                return str(file)
         except Exception:
 
             pass
