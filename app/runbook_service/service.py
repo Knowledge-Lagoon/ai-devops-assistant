@@ -2,6 +2,10 @@ from app.runbook_service.confluence_search import (
     find_page_by_title
 )
 
+from app.runbook_service.confluence_publish import (
+    create_runbook_page
+)
+
 from app.runbook_service.generator import (
     generate_runbook
 )
@@ -47,6 +51,9 @@ def get_or_create_runbook(
         rca_text
     )
 
-    print(runbook)
+    create_runbook_page(
+        title=incident_type,
+        content=runbook
+    )
 
     return runbook
