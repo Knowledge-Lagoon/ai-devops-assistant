@@ -49,10 +49,10 @@ def find_page_by_title(
 if __name__ == "__main__":
 
     pages_to_find = [
+        "DevOps Runbooks",
         "Kubernetes",
         "CI-CD",
-        "Terraform",
-        "CrashLoopBackOff"
+        "Terraform"
     ]
 
     for page_name in pages_to_find:
