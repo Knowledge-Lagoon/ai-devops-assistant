@@ -63,10 +63,27 @@ def create_runbook_page(
         "Status:",
         response.status_code
     )
+print(
+    "\n=== RESPONSE BODY ===\n"
+)
 
-    response.raise_for_status()
+print(
+    response.text
+)
 
-    data = response.json()
+if response.status_code >= 400:
+
+    print(
+        "\n=== RESPONSE BODY ===\n"
+    )
+
+    print(
+        response.text
+    )
+
+response.raise_for_status()
+
+data = response.json()
 
     print(
         "\n=== CONFLUENCE RESPONSE ===\n"
