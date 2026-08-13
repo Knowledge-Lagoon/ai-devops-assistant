@@ -81,21 +81,21 @@ if response.status_code >= 400:
         response.text
     )
 
-response.raise_for_status()
+    response.raise_for_status()
 
-data = response.json()
+    data = response.json()
 
     print(
         "\n=== CONFLUENCE RESPONSE ===\n"
     )
-
+    
     print(
         json.dumps(
             data,
             indent=2
         )
     )
-
+    
     return {
         "id": data["id"],
         "title": data["title"]
