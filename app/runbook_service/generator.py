@@ -3,11 +3,11 @@ import re
 
 from app.rag.chat import ask_llm
 
-from app.runbook_generator.prompts import (
+from app.runbook_service.prompts import (
     RUNBOOK_GENERATION_PROMPT
 )
 
-from app.runbook_generator.registry import (
+from app.runbook_service.registry import (
     find_runbook_by_incident
 )
 
