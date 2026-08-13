@@ -118,4 +118,31 @@ if __name__ == "__main__":
         )
 
         print(
-        
+            "\nSkipping generation."
+        )
+
+    else:
+
+        print(
+            "\nGenerating runbook...\n"
+        )
+
+        runbook = generate_runbook(
+            rca_text
+        )
+
+        print(
+            "\n===== GENERATED RUNBOOK =====\n"
+        )
+
+        print(runbook)
+
+        output_file = save_runbook(
+            runbook,
+            category,
+            runbook_name
+        )
+
+        print(
+            f"\nRunbook saved to: {output_file}"
+        )

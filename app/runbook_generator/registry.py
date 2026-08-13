@@ -24,7 +24,7 @@ def find_runbook_by_incident(
            if (
                 f"In*ident Type: {incident_type}"
                in content
-            )
+              ):
 
                 return str(file)*
         except Exception:
