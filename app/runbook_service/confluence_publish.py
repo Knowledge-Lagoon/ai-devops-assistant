@@ -29,6 +29,12 @@ def create_page(
         }
     }
 
+    # Add the print statements here
+    print("\n=== CREATE PAGE REQUEST ===\n")
+    print("Title:", title)
+    print("Parent ID:", parent_id)
+    print("Space ID:", CONFLUENCE_SPACE_ID)
+    
     response = requests.post(
         url,
         json=payload,
@@ -62,8 +68,3 @@ Increase memory limits.
 Review application memory usage.
 """
     )    
-
-    print("\n=== CREATE PAGE REQUEST ===\n")
-    print("Title:", title)
-    print("Parent ID:", parent_id)
-    print("Space ID:", CONFLUENCE_SPACE_ID)
