@@ -7,7 +7,50 @@ from app.runbook_service.confluence_client import (
 )
 
 
-def find_page_by_title(title: str):
+def test_confluence():
+
+    tests = [
+        (
+            "Space API",
+            f"{CONFLUENCE_URL}/rest/api/space"
+        ),
+        (
+            "Search API",
+            f"{CONFLUENCE_URL}/rest/api/search"
+        ),
+        (
+            "Content API",
+            f"{CONFLUENCE_URL}/rest/api/content"
+        )
+    ]
+
+    for name, url in tests:
+
+        print("\n" + "=" * 60)
+        print(f"TEST : {name}")
+        print(f"URL  : {url}")
+        print("=" * 60)
+
+        try:
+
+            response = requests.get(
+                url,
+                auth=(
+                    ATLASSIAN_EMAIL,
+                    ATLASSIAN_API_TOKEN
+                )
+            )
+
+            print(f"STATUS : {response.status_code}")
+            print("BODY:")
+            print(response.text[:1000])
+
+        except Exception as ex:
+
+            print(f"ERROR: {ex}")
+
+
+def search_pages():
 
     url = f"{CONFLUENCE_URL}/rest/api/search"
 
@@ -18,78 +61,37 @@ def find_page_by_title(title: str):
             ATLASSIAN_API_TOKEN
         ),
         params={
-            "cql": f'title="{title}"'
+            "cql": 'type="page"'
         }
     )
 
-    print("\n=== SEARCH REQUEST ===")
-    print(f"URL: {response.url}")
-    print(f"STATUS: {response.status_code}")
+    print("\n" + "=" * 60)
+    print("SEARCH TEST")
+    print("=" * 60)
+
+    print(f"STATUS : {response.status_code}")
+    print(f"URL    : {response.url}")
 
     if response.status_code != 200:
         print(response.text)
-        return None
+        return
 
     data = response.json()
 
-    print(f"RESULTS FOUND: {data.get('size', 0)}")
+    print(f"RESULTS: {data.get('size', 0)}")
 
-    if data.get("size", 0) == 0:
-        print(f"Page '{title}' not found")
-        return None
+    for page in data.get("results", []):
 
-    page = data["results"][0]
+        title = page.get("title")
 
-    page_id = page["content"]["id"]
+        page_id = (
+            page.get("content", {})
+                .get("id")
+        )
 
-    print("\n=== PAGE FOUND ===")
-    print(f"TITLE: {page['title']}")
-    print(f"PAGE ID: {page_id}")
-
-    return page_id
+        print(f"ID={page_id} TITLE={title}")
 
 
-def get_page_content(page_id: str):
+def get_crashloop_page():
 
-    url = (
-        f"{CONFLUENCE_URL}/rest/api/content/"
-        f"{page_id}"
-    )
-
-    response = requests.get(
-        url,
-        auth=(
-            ATLASSIAN_EMAIL,
-            ATLASSIAN_API_TOKEN
-        ),
-        params={
-            "expand": "body.storage"
-        }
-    )
-
-    print("\n=== CONTENT REQUEST ===")
-    print(f"URL: {response.url}")
-    print(f"STATUS: {response.status_code}")
-
-    if response.status_code != 200:
-        print(response.text)
-        return None
-
-    data = response.json()
-
-    body = data["body"]["storage"]["value"]
-
-    print("\n=== PAGE CONTENT ===")
-    print(body[:1000])
-
-    return body
-
-
-if __name__ == "__main__":
-
-    title = "CrashLoopBackOff"
-
-    page_id = find_page_by_title(title)
-
-    if page_id:
-        get_page_content(page_id)
+    page_id = "
