@@ -8,37 +8,27 @@ from app.runbook_service.confluence_client import (
 
 
 def test_confluence():
-
     tests = [
         (
-            "Space API",
-            f"{CONFLUENCE_URL}/rest/api/space"
+            "Space API (v2)",
+            f"{CONFLUENCE_URL}/api/v2/spaces"
         ),
         (
-            "Search API",
-            f"{CONFLUENCE_URL}/rest/api/search"
-        ),
-        (
-            "Content API",
-            f"{CONFLUENCE_URL}/rest/api/content"
+            "Pages API (v2)",
+            f"{CONFLUENCE_URL}/api/v2/pages"
         )
     ]
 
     for name, url in tests:
-
         print("\n" + "=" * 60)
         print(f"TEST : {name}")
         print(f"URL  : {url}")
         print("=" * 60)
 
         try:
-
             response = requests.get(
                 url,
-                auth=(
-                    ATLASSIAN_EMAIL,
-                    ATLASSIAN_API_TOKEN
-                )
+                auth=(ATLASSIAN_EMAIL, ATLASSIAN_API_TOKEN)
             )
 
             print(f"STATUS : {response.status_code}")
@@ -46,27 +36,23 @@ def test_confluence():
             print(response.text[:1000])
 
         except Exception as ex:
-
             print(f"ERROR: {ex}")
 
 
 def search_pages():
-
-    url = f"{CONFLUENCE_URL}/rest/api/search"
+    # If using modern v2, you filter pages by title or container rather than raw CQL
+    url = f"{CONFLUENCE_URL}/api/v2/pages"
 
     response = requests.get(
         url,
-        auth=(
-            ATLASSIAN_EMAIL,
-            ATLASSIAN_API_TOKEN
-        ),
+        auth=(ATLASSIAN_EMAIL, ATLASSIAN_API_TOKEN),
         params={
-            "cql": 'type="page"'
+            "limit": 10  # Retrieves the first 10 pages
         }
     )
 
     print("\n" + "=" * 60)
-    print("SEARCH TEST")
+    print("PAGES LIST TEST (v2)")
     print("=" * 60)
 
     print(f"STATUS : {response.status_code}")
@@ -77,43 +63,31 @@ def search_pages():
         return
 
     data = response.json()
+    results = data.get("results", [])
+    print(f"RESULTS: {len(results)}")
 
-    print(f"RESULTS: {data.get('size', 0)}")
-
-    for page in data.get("results", []):
-
+    for page in results:
         title = page.get("title")
-
-        page_id = (
-            page.get("content", {})
-                .get("id")
-        )
-
+        page_id = page.get("id")
         print(f"ID={page_id} TITLE={title}")
 
 
 def get_crashloop_page():
-
     page_id = "327685"
 
-    url = (
-        f"{CONFLUENCE_URL}"
-        f"/rest/api/content/{page_id}"
-    )
+    # Updated to Confluence v2 Endpoint
+    url = f"{CONFLUENCE_URL}/api/v2/pages/{page_id}"
 
     response = requests.get(
         url,
-        auth=(
-            ATLASSIAN_EMAIL,
-            ATLASSIAN_API_TOKEN
-        ),
+        auth=(ATLASSIAN_EMAIL, ATLASSIAN_API_TOKEN),
         params={
-            "expand": "body.storage"
+            "body-format": "storage"  # Modern replacement for expand=body.storage
         }
     )
 
     print("\n" + "=" * 60)
-    print("PAGE CONTENT TEST")
+    print("PAGE CONTENT TEST (v2)")
     print("=" * 60)
 
     print(f"STATUS : {response.status_code}")
@@ -126,17 +100,16 @@ def get_crashloop_page():
     data = response.json()
 
     print("SUCCESS")
-    print(data["title"])
+    print(f"Title: {data.get('title')}")
 
-    body = data["body"]["storage"]["value"]
+    # Access the body safely via the new JSON path
+    body_data = data.get("body", {}).get("storage", {})
+    body = body_data.get("value", "No storage body found")
 
     print(body[:1000])
 
 
 if __name__ == "__main__":
-
     test_confluence()
-
     search_pages()
-
     get_crashloop_page()
