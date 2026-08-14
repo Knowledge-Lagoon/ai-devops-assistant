@@ -13,32 +13,12 @@ def find_page_by_title(
 
     url = f"{CONFLUENCE_URL}/api/v2/pages"
 
-    print("\n=== SEARCH REQUEST ===\n")
-
-    print("URL:", url)
-    print("EMAIL:", ATLASSIAN_EMAIL)
-    print(
-        "TOKEN:",
-        "SET" if ATLASSIAN_API_TOKEN else "MISSING"
-    )
-
     response = requests.get(
         url,
         auth=(
             ATLASSIAN_EMAIL,
             ATLASSIAN_API_TOKEN
         )
-    )
-
-    print("\n=== SEARCH RESPONSE ===\n")
-
-    print(
-        "Status:",
-        response.status_code
-    )
-
-    print(
-        response.text[:1000]
     )
 
     response.raise_for_status()
