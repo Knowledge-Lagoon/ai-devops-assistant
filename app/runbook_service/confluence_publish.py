@@ -36,7 +36,6 @@ def create_runbook_page(
 
     payload = {
         "spaceId": CONFLUENCE_SPACE_ID,
-        "parentId": DEVOPS_RUNBOOKS_PAGE_ID,
         "status": "current",
         "title": title,
         "body": {
