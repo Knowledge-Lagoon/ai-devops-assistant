@@ -16,6 +16,10 @@ def process_cluster(
     context: str
 ):
 
+    print(
+        f"\n=== PROCESSING CLUSTER: {context} ===\n"
+    )
+
     failed_pods = get_failed_pods(
         context
     )
@@ -26,13 +30,15 @@ def process_cluster(
             "\nNo failed pods found.\n"
         )
 
-        return
+        return []
+
+    results = []
 
     for pod in failed_pods:
 
         print(
             f"\nProcessing pod: "
-            f"{pod['pod']}\n"
+            f"{pod['pod']}"
         )
 
         evidence = collect_evidence(
@@ -45,20 +51,22 @@ def process_cluster(
             evidence
         )
 
-        incident_type = pod.get(
-            "reason",
-            "Unknown"
-        )
-
         runbook = get_or_create_runbook(
-            incident_type=incident_type,
+            incident_type=pod["reason"],
             rca_text=rca
         )
 
-        print(
-            "\n=== RUNBOOK RESULT ===\n"
+        result = {
+            "cluster": context,
+            "namespace": pod["namespace"],
+            "pod": pod["pod"],
+            "incident_type": pod["reason"],
+            "rca": rca,
+            "runbook": runbook
+        }
+
+        results.append(
+            result
         )
 
-        print(
-            runbook
-        )
+    return results
