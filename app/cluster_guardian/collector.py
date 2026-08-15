@@ -11,7 +11,70 @@ SEVERITY_HINTS = {
     "Pending": "Medium"
 }
 
+def collect_evidence(
+    context: str,
+    namespace: str,
+    pod: str
+):
 
+    validate_context(
+        context
+    )
+
+    describe_output = run_command(
+        f"kubectl --context {context} "
+        f"describe pod {pod} "
+        f"-n {namespace}"
+    )
+
+    logs_output = run_command(
+        f"kubectl --context {context} "
+        f"logs {pod} "
+        f"-n {namespace} "
+        f"--tail=100"
+    )
+
+    try:
+
+        previous_logs_output = run_command(
+            f"kubectl --context {context} "
+            f"logs {pod} "
+            f"-n {namespace} "
+            f"--previous "
+            f"--tail=100"
+        )
+
+    except Exception:
+
+        previous_logs_output = ""
+
+    events_output = run_command(
+        f"kubectl --context {context} "
+        f"get events "
+        f"-n {namespace} "
+        f"--sort-by=.metadata.creationTimestamp"
+    )
+
+    deployment_output = run_command(
+        f"kubectl --context {context} "
+        f"get deployment "
+        f"-n {namespace}"
+    )
+
+    return {
+        "timestamp": (
+            datetime.utcnow()
+            .isoformat()
+        ),
+        "cluster": context,
+        "namespace": namespace,
+        "pod": pod,
+        "describe": describe_output,
+        "logs": logs_output,
+        "previous_logs": previous_logs_output,
+        "events": events_output,
+        "deployments": deployment_output
+    }
 def run_command(
     command: str
 ):
