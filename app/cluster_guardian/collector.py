@@ -1,6 +1,16 @@
 import json
 import subprocess
 
+from datetime import datetime
+
+
+SEVERITY_HINTS = {
+    "CrashLoopBackOff": "High",
+    "OOMKilled": "High",
+    "ImagePullBackOff": "Medium",
+    "Pending": "Medium"
+}
+
 
 def run_command(
     command: str
@@ -13,13 +23,45 @@ def run_command(
         text=True
     )
 
+    if result.returncode != 0:
+
+        raise Exception(
+            f"Command failed:\n"
+            f"{command}\n\n"
+            f"{result.stderr}"
+        )
+
     return result.stdout.strip()
 
 
-def get_failed_pods():
+def validate_context(
+    context: str
+):
 
     output = run_command(
-        "kubectl get pods -A -o json"
+        "kubectl config get-contexts -o name"
+    )
+
+    contexts = output.splitlines()
+
+    if context not in contexts:
+
+        raise Exception(
+            f"Cluster context '{context}' not found"
+        )
+
+
+def get_failed_pods(
+    context: str
+):
+
+    validate_context(
+        context
+    )
+
+    output = run_command(
+        f"kubectl --context {context} "
+        f"get pods -A -o json"
     )
 
     data = json.loads(
@@ -64,78 +106,4 @@ def get_failed_pods():
 
             if waiting:
 
-                failed_pods.append(
-                    {
-                        "namespace": namespace,
-                        "pod": pod_name,
-                        "reason": waiting.get(
-                            "reason"
-                        )
-                    }
-                )
-
-    return failed_pods
-
-
-def collect_evidence(
-    namespace: str,
-    pod: str
-):
-
-    describe_output = run_command(
-        f"kubectl describe pod {pod} -n {namespace}"
-    )
-
-    logs_output = run_command(
-        f"kubectl logs {pod} -n {namespace} --tail=100"
-    )
-
-    events_output = run_command(
-        f"kubectl get events "
-        f"-n {namespace} "
-        "--sort-by=.metadata.creationTimestamp"
-    )
-
-    return {
-        "namespace": namespace,
-        "pod": pod,
-        "describe": describe_output,
-        "logs": logs_output,
-        "events": events_output
-    }
-
-
-if __name__ == "__main__":
-
-    failed_pods = get_failed_pods()
-
-    print(
-        "\n=== FAILED PODS ===\n"
-    )
-
-    print(
-        json.dumps(
-            failed_pods,
-            indent=2
-        )
-    )
-
-    if failed_pods:
-
-        pod = failed_pods[0]
-
-        evidence = collect_evidence(
-            pod["namespace"],
-            pod["pod"]
-        )
-
-        print(
-            "\n=== EVIDENCE ===\n"
-        )
-
-        print(
-            json.dumps(
-                evidence,
-                indent=2
-            )
-        )
+                reason
