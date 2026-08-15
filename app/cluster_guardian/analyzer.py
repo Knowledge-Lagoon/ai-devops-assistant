@@ -1,52 +1,30 @@
 from app.incident_analyzer.analyzer import (
-    analyze_incident
+    analyze
 )
 
 
-def build_context(
+def build_log_events(
     evidence: dict
 ):
 
-    return f"""
-Cluster:
-{evidence['cluster']}
-
-Namespace:
-{evidence['namespace']}
-
-Pod:
-{evidence['pod']}
-
-Timestamp:
-{evidence['timestamp']}
-
-Events:
-{evidence['events']}
-
-Current Logs:
-{evidence['logs']}
-
-Previous Logs:
-{evidence['previous_logs']}
-
-Deployments:
-{evidence['deployments']}
-
-Pod Description:
-{evidence['describe']}
-"""
+    return [
+        evidence["events"],
+        evidence["logs"],
+        evidence["previous_logs"],
+        evidence["describe"]
+    ]
 
 
 def generate_rca(
     evidence: dict
 ):
 
-    context = build_context(
+    log_events = build_log_events(
         evidence
     )
 
-    rca = analyze_incident(
-        context
+    rca = analyze(
+        log_events
     )
 
     return rca
@@ -56,7 +34,7 @@ if __name__ == "__main__":
 
     sample_evidence = {
         "timestamp": "2026-08-15T20:00:00",
-        "cluster": "eks-dev",
+        "cluster": "k8s-chaos-lab",
         "namespace": "default",
         "pod": "test-pod",
         "events": "Back-off restarting failed container",
