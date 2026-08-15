@@ -7,12 +7,32 @@ def build_log_events(
     evidence: dict
 ):
 
+    summary = f"""
+Incident Evidence
+
+Cluster:
+{evidence["cluster"]}
+
+Namespace:
+{evidence["namespace"]}
+
+Pod:
+{evidence["pod"]}
+
+Current Logs:
+{evidence["logs"]}
+
+Previous Logs:
+{evidence["previous_logs"]}
+
+Recent Events:
+{evidence["events"]}
+"""
+
     return [
-        evidence["events"],
-        evidence["logs"],
-        evidence["previous_logs"],
-        evidence["describe"]
+        summary
     ]
+
 
 
 def generate_rca(

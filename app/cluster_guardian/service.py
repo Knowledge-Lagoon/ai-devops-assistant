@@ -1,3 +1,4 @@
+import time
 from app.cluster_guardian.collector import (
     get_failed_pods,
     collect_evidence
@@ -11,6 +12,7 @@ from app.runbook_service.service import (
     get_or_create_runbook
 )
 
+start = time.time()
 
 def process_cluster(
     context: str
@@ -47,11 +49,18 @@ def process_cluster(
             pod=pod["pod"]
         )
         
+        start = time.time()
         print("Generating RCA")
         rca = generate_rca(
             evidence
         )
-        
+
+
+        print(
+            f"RCA completed in "
+            f"{time.time() - start:.2f}s"
+)
+
         print("Searching / Creating Runbook")
         runbook = get_or_create_runbook(
             incident_type=pod["reason"],
