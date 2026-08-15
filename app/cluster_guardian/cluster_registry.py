@@ -8,4 +8,3 @@ CLUSTERS = [
         "context": "arn:aws:eks:us-east-1:681117450266:cluster/k8s-chaos-lab-2"
     }
 ]
-``
