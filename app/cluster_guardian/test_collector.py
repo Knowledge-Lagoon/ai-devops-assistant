@@ -6,7 +6,7 @@ from app.cluster_guardian.collector import (
 )
 
 CLUSTER_CONTEXT = (
-    "arn:aws:eks:us-east-1:275198336814:cluster/k8s-chaos-lab"
+    "arn:aws:eks:us-east-1:992382823805:cluster/k8s-chaos-lab"
 )
 
 failed_pods = get_failed_pods(
