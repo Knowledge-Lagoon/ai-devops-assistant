@@ -46,11 +46,13 @@ def process_cluster(
             namespace=pod["namespace"],
             pod=pod["pod"]
         )
-
+        
+        print("Generating RCA")
         rca = generate_rca(
             evidence
         )
-
+        
+        print("Searching / Creating Runbook")
         runbook = get_or_create_runbook(
             incident_type=pod["reason"],
             rca_text=rca
