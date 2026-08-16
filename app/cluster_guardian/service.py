@@ -66,6 +66,10 @@ def process_cluster(
             incident_type=pod["reason"],
             rca_text=rca
         )
+        
+        rca = generate_rca(
+             evidence
+       ) 
 
         result = {
             "cluster": context,

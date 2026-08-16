@@ -7,21 +7,28 @@ def build_log_events(
     evidence: dict
 ):
 
+    incident_type = evidence.get(
+        "incident_type",
+        "Unknown"
+    )
+
     summary = f"""
-Incident Type: Kubernetes Pod Failure
+Incident Type:
+{incident_type}
 
 Current Logs:
-{evidence['logs']}
+{evidence["logs"]}
 
 Previous Logs:
-{evidence['previous_logs']}
+{evidence["previous_logs"]}
 
 Recent Events:
-{evidence['events']}
+{evidence["events"]}
 """
 
-    return
-
+    return [
+        summary
+    ]
 
 
 def generate_rca(
@@ -42,15 +49,18 @@ def generate_rca(
 if __name__ == "__main__":
 
     sample_evidence = {
-        "timestamp": "2026-08-15T20:00:00",
-        "cluster": "k8s-chaos-lab",
-        "namespace": "default",
-        "pod": "test-pod",
-        "events": "Back-off restarting failed container",
-        "logs": "Application startup failed",
-        "previous_logs": "Database connection refused",
-        "deployments": "sample deployment",
-        "describe": "CrashLoopBackOff"
+        "incident_type": "CrashLoopBackOff",
+        "logs": (
+            "Database connection failed\n"
+            "Unable to connect to postgres-service"
+        ),
+        "previous_logs": (
+            "Database connection failed\n"
+            "Unable to connect to postgres-service"
+        ),
+        "events": (
+            "Back-off restarting failed container"
+        )
     }
 
     rca = generate_rca(
