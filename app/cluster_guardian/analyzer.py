@@ -8,30 +8,19 @@ def build_log_events(
 ):
 
     summary = f"""
-Incident Evidence
-
-Cluster:
-{evidence["cluster"]}
-
-Namespace:
-{evidence["namespace"]}
-
-Pod:
-{evidence["pod"]}
+Incident Type: Kubernetes Pod Failure
 
 Current Logs:
-{evidence["logs"]}
+{evidence['logs']}
 
 Previous Logs:
-{evidence["previous_logs"]}
+{evidence['previous_logs']}
 
 Recent Events:
-{evidence["events"]}
+{evidence['events']}
 """
 
-    return [
-        summary
-    ]
+    return
 
 
 
