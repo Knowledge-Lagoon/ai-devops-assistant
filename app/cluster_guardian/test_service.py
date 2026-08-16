@@ -3,7 +3,7 @@ from app.cluster_guardian.service import (
 )
 
 CLUSTER_CONTEXT = (
-    "arn:aws:eks:us-east-1:992382823805:cluster/k8s-chaos-lab"
+    "arn:aws:eks:us-east-1:590183823048:cluster/k8s-chaos-lab"
 )
 
 results = process_cluster(
