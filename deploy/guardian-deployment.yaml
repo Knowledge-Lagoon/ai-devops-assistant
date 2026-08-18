@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-cluster-guardian
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: ai-cluster-guardian
+
+  template:
+    metadata:
+      labels:
+        app: ai-cluster-guardian
+
+    spec:
+      serviceAccountName: guardian-sa
+
+      containers:
+      - name: guardian
+
+        image: ai-cluster-guardian:latest
+
+        imagePullPolicy: IfNotPresent
