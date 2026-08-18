@@ -1,10 +1,12 @@
+from app.cluster_guardian.cluster_registry import (
+    CLUSTERS
+)
+
 from app.cluster_guardian.service import (
     process_cluster
 )
 
-CONTEXT = (
-    "your_cluster_context_here"
-)
+CONTEXT = CLUSTERS[0]["context"]
 
 print("\n======= FIRST RUN =======\n")
 
