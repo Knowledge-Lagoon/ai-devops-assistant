@@ -102,6 +102,29 @@ def process_cluster(
             f"{pod['pod']}"
         )
 
+        #
+        # PHASE 2 OPTIMIZATION
+        # Check incident memory FIRST.
+        # Don't waste time generating RCA
+        # for an incident we already know about.
+        #
+        if incident_exists(
+            pod
+        ):
+
+            existing_ticket = (
+                get_ticket_key(
+                    pod
+                )
+            )
+
+            print(
+                f"\nIncident already exists: "
+                f"{existing_ticket}"
+            )
+
+            continue
+
         evidence = collect_evidence(
             context=context,
             namespace=pod["namespace"],
@@ -136,46 +159,25 @@ def process_cluster(
             rca_text=rca
         )
 
-        if incident_exists(
-            pod
-        ):
+        print(
+            "\nCreating Jira Ticket"
+        )
 
-            existing_ticket = (
-                get_ticket_key(
-                    pod
-                )
-            )
+        ticket = create_guardian_ticket(
+            pod=pod,
+            evidence=evidence,
+            runbook=runbook
+        )
 
-            print(
-                f"\nIncident already exists: "
-                f"{existing_ticket}"
-            )
+        register_incident(
+            pod,
+            ticket["key"]
+        )
 
-            ticket = {
-                "key": existing_ticket
-            }
-
-        else:
-
-            print(
-                "\nCreating Jira Ticket"
-            )
-
-            ticket = create_guardian_ticket(
-                pod=pod,
-                evidence=evidence,
-                runbook=runbook
-            )
-
-            register_incident(
-                pod,
-                ticket["key"]
-            )
-
-            print(
-                f"Jira Ticket Created: "
-                f"{ticket['key']}"
-            )
+        print(
+            f"Jira Ticket Created: "
+            f"{ticket['key']}"
+        )
 
         result = {
             "cluster": context,
