@@ -3,7 +3,7 @@ CLUSTERS = [
         "name": "k8s-chaos-lab",
         "context": (
             "arn:aws:eks:us-east-1:"
-            "599626541016:cluster/"
+            "609110637160:cluster/"
             "k8s-chaos-lab"
         )
     },
@@ -11,7 +11,7 @@ CLUSTERS = [
         "name": "k8s-chaos-lab-2",
         "context": (
             "arn:aws:eks:us-east-1:"
-            "599626541016:cluster/"
+            "609110637160:cluster/"
             "k8s-chaos-lab-2"
         )
     }
